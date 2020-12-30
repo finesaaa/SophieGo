@@ -32,6 +32,6 @@ public class StepCounterPanel {
 //		fm = g.getFontMetrics();
 		g.setColor(Assets.mColor);
 //		g.fillRoundRect(0, 0, fm.stringWidth(text) + 40, fm.getHeight() + 6, 50, 50);
-		Text.drawString(g, text + numStep + " / " + targetNumStep, x, y, true, Assets.mColor);
+		Text.drawString(g, (text + numStep + " / " + targetNumStep).toUpperCase(), x, y, true, Assets.mColor);
 	}
 }

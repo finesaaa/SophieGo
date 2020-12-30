@@ -1,5 +1,6 @@
 package com.sophiego.sophie;
 
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -38,9 +39,12 @@ public class Level {
 	
 	private static int ID = 0;
 	private int id;
+	private FontMetrics fm;
+	private String text;
 	
 	public Level(int[][] maze, int player_row, int player_col, LevelSelectorState levelSelectorState) {
 		this.levelSelectorState = levelSelectorState;
+
 		this.maze = maze;
 		this.num_coin = 0;
 		this.target_num_coin = 0;
@@ -108,6 +112,8 @@ public class Level {
 		
 		num_step = 0;
 		num_coin = 0;
+		stepCounterPanel.update(num_step);
+		coinPanel.update(num_coin);
 		player_row = plaStartRow;
 		player_col = plaStartCol;
 		texture = Assets.PlayerFront;
@@ -141,17 +147,24 @@ public class Level {
 		
 		for(int row = 0; row < maze.length; row++)
 			for(int col = 0; col < maze[row].length; col++)
+			{
+				if(num_step > target_num_step) reset();
 				if(maze[row][col] == 3 || maze[row][col] == 5) return;
-		
+			}
+				
 		levelSelectorState.getLevels()[id].setSolved(true);
-		State.currentState = levelSelectorState;
+		if (levelSelectorState.getLevels()[id].isSolved()) {
+//			System.out.println("I'm here boy "+id);
+			State.currentLevel = id;
+			levelSelectorState.showResult();
+		}
 	}
 
 	private void move(int row, int col) {
-		num_step++;
-		stepCounterPanel.update(num_step);
 
 		if(maze[player_row + row][player_col + col] != 1) {
+			num_step++;
+			stepCounterPanel.update(num_step);
 			if(maze[player_row + row ][player_col + col] == 3)  {
 				maze[player_row + row][player_col + col] = 4; //ganti brick
 				this.num_coin++;
@@ -160,26 +173,7 @@ public class Level {
 			if(maze[player_row + row ][player_col + col] == 5 && num_coin == target_num_coin)  {
 				maze[player_row + row][player_col + col] = 4; //ganti brick
 			}
-//			if(maze[player_row + row][player_col + col] == 2 || maze[player_row + row][player_col + col] == 4)  {
-//				if (maze[player_row + row * 2][player_col + col * 2] == 1 || 
-//						maze[player_row + row * 2][player_col + col * 2] == 2 || 
-//						maze[player_row + row * 2][player_col + col * 2] == 4 ) //tidak bisa jalan lagi (tembok/brick/done)
-//					return;
-//				if (maze[player_row + row][player_col + col] == 4) { //kalo udah done tapi didorong lagi
-//					maze[player_row + row][player_col + col] = 3; 
-//					if(maze[player_row + row * 2][player_col + col * 2] == 3)  //kalo didepan brick yg didorong itu tujuan
-//						maze[player_row + row * 2][player_col + col * 2] = 4; //done
-//					else 
-//						maze[player_row + row * 2][player_col + col * 2] = 2; //ganti brick
-//				} else { 
-//					maze[player_row + row][player_col + col] = 0; 
-//					if(maze[player_row + row * 2][player_col + col * 2] == 3)  //kalo didepan brick yg didorong itu tujuan
-//						maze[player_row + row * 2][player_col + col * 2] = 4; //done
-//					else 
-//						maze[player_row + row * 2][player_col + col * 2] = 2; //ganti brick
-//					
-//				}
-//			}
+			
 			player_row += row;
 			player_col += col;
 		}
@@ -192,13 +186,17 @@ public class Level {
 		coinPanel.render(g);
 		stepCounterPanel.render(g);
 		
+		this.text = "Level " + (State.currentLevel + 1);
+		g.setFont(Assets.fontLevel);
+		g.setColor(Assets.mColor);
+		fm = g.getFontMetrics();
+		g.drawString(text, Window.WIDTH/2 - fm.stringWidth(text)/2, 75);
+		
 		for (int row = 0; row < maze.length; row++) {
 			for (int col = 0;  col < maze[row].length; col++) {
 				g.drawImage(Assets.floor, xOffset + col*TILESIZE, yOffset + row*TILESIZE, null);
 				if(maze[row][col] == 1)
 					g.drawImage(Assets.wall, xOffset + col*TILESIZE, yOffset + row*TILESIZE, null);
-				if(maze[row][col] == 2)
-					g.drawImage(Assets.boxOff, xOffset + col*TILESIZE, yOffset + row*TILESIZE, null);
 				if(maze[row][col] == 3)
 					g.drawImage(Assets.spot, xOffset + col*TILESIZE, yOffset + row*TILESIZE, null);
 				if(maze[row][col] == 4)

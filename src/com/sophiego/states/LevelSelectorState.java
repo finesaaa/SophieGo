@@ -20,10 +20,10 @@ import com.sophiego.states.State;
 public class LevelSelectorState extends State{
 	
 	private final int DOUBLETILESIZE = 64;
-	private Level[] levels = new Level[30];
+	private Level[] levels = new Level[15];
 	
-	private final int xOffset = (Window.WIDTH - DOUBLETILESIZE*6)/2;
-	private final int yOffset = (Window.HEIGHT - DOUBLETILESIZE*5)/2;
+	private final int xOffset = (Window.WIDTH - DOUBLETILESIZE*5)/2;
+	private final int yOffset = (Window.HEIGHT - DOUBLETILESIZE*6)/2;
 	
 	private Button back;
 	
@@ -57,11 +57,13 @@ public class LevelSelectorState extends State{
 		int counter = 1;
 		g.setFont(Assets.font30);
 		
-		for(int i = 0; i < 5; i++) {
-			for (int j = 0; j < 6; j++) {
+		for(int i = 0; i < 3; i++) {
+			for (int j = 0; j < 5; j++) {
 				Rectangle bounds = new Rectangle(xOffset + j*DOUBLETILESIZE, yOffset + i*DOUBLETILESIZE, DOUBLETILESIZE, DOUBLETILESIZE);
 				if(bounds.contains(MouseManager.x, MouseManager.y)) {
 					if(MouseManager.left && levels[counter-1].isSolved()) {
+//						System.out.println("counter "  + counter);
+//						State.currentArrLevel = levels[counter-1];
 						((GameState)window.getGameState()).setLevel(levels[counter-1]);
 						State.currentState = window.getGameState();
 					}
@@ -129,6 +131,10 @@ public class LevelSelectorState extends State{
 	}
 
 
+	public void showResult() {
+		State.currentState = window.getResultState();
+	}
+	
 	public Level[] getLevels() {
 		return levels;
 	}

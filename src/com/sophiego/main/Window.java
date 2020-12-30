@@ -16,6 +16,7 @@ import com.sophiego.states.GameState;
 import com.sophiego.states.LevelSelectorState;
 import com.sophiego.states.LoadingState;
 import com.sophiego.states.MenuState;
+import com.sophiego.states.ResultState;
 import com.sophiego.states.State;
 
 @SuppressWarnings("serial")
@@ -37,6 +38,7 @@ public class Window extends JFrame implements Runnable {
 	private LevelSelectorState levelSelectorState;
 	private MenuState menuState;
 	private LoadingState loadingState;
+	private ResultState resultState;
 	
 	private KeyBoard keyBoard;
 	private MouseManager mouseManager;
@@ -112,6 +114,7 @@ public class Window extends JFrame implements Runnable {
 		gameState = new GameState(this);
 		loadingState = new LoadingState(this);
 		levelSelectorState = new LevelSelectorState(this);
+		resultState = new ResultState(this);
 		State.currentState = loadingState;
 	}
 	
@@ -172,5 +175,10 @@ public class Window extends JFrame implements Runnable {
 	public State getMenuState(){
 		return menuState;
 	}
+	
+	public State getResultState(){
+		return resultState;
+	}
+
 
 }
