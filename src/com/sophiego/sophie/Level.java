@@ -18,7 +18,7 @@ public class Level {
 	private int[][] copy;
 	
 	private int player_row, player_col;
-	private int num_coin, target_num_coin, num_step;
+	private int num_coin, target_num_coin, num_step, target_num_step;
 	
 	private Image texture;
 	
@@ -30,9 +30,10 @@ public class Level {
 	private Button restart, back;
 	private CoinPanel coinPanel;
 	private StepCounterPanel stepCounterPanel;
+	private ShortestPath shortestPath;
 	private boolean solved;
 	
-	private int plaStartRow, plaStartCol;
+	private int plaStartRow, plaStartCol, plaEndRow, plaEndCol;
 	private LevelSelectorState levelSelectorState;
 	
 	private static int ID = 0;
@@ -53,14 +54,20 @@ public class Level {
 			{
 				copy[row][col] = maze[row][col];
 				if (maze[row][col] == 3) this.target_num_coin++;
+				if (maze[row][col] == 5) {
+					plaEndRow = row;
+					plaEndCol = col;
+				}
 			}
 				
-			
 			plaStartRow = player_row;
 			plaStartCol = player_col;
 			
 			this.player_row = player_row;
 			this.player_col = player_col;
+			
+			shortestPath = new ShortestPath(this.maze, plaStartRow, plaStartCol, plaEndRow, plaEndCol);
+			target_num_step = shortestPath.minMoves();
 			
 			if(ID == 1) 
 			{
@@ -88,7 +95,7 @@ public class Level {
 				}
 			}, Assets.font30);
 			coinPanel = new CoinPanel("Coin: ", num_coin, target_num_coin, 120, 50, Assets.font30);
-			stepCounterPanel = new StepCounterPanel("Step: ", num_step, Window.WIDTH - 120, 50, Assets.font30);
+			stepCounterPanel = new StepCounterPanel("Step: ", num_step, target_num_step, Window.WIDTH - 120, 50, Assets.font30);
 			time = 0;
 			lastTime = System.currentTimeMillis();
 		}

@@ -18,6 +18,7 @@ import com.sophiego.states.LoadingState;
 import com.sophiego.states.MenuState;
 import com.sophiego.states.State;
 
+@SuppressWarnings("serial")
 public class Window extends JFrame implements Runnable {
 	
 	public static final int WIDTH = 800, HEIGHT = 600;
