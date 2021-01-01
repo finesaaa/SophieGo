@@ -19,11 +19,15 @@ import com.sophiego.states.State;
 
 public class LevelSelectorState extends State{
 	
-	private final int DOUBLETILESIZE = 64;
+	private final int DOUBLETILESIZE = 74;
 	private Level[] levels = new Level[30];
 	
-	private final int xOffset = (Window.WIDTH - DOUBLETILESIZE*6)/2;
-	private final int yOffset = (Window.HEIGHT - DOUBLETILESIZE*5)/2;
+	private final int xOffset = (Window.WIDTH - DOUBLETILESIZE*7)/2;
+	private final int yOffset = (Window.HEIGHT - DOUBLETILESIZE*4)/2;
+	private final int SPACE = 10;
+	
+//	private final int xOffset = (Window.WIDTH - DOUBLETILESIZE*4)/2;
+//	private final int yOffset = (Window.HEIGHT - DOUBLETILESIZE*2)/2;
 	
 	private Button back;
 	
@@ -40,7 +44,7 @@ public class LevelSelectorState extends State{
 				State.currentState = window.getMenuState();
 			}
 			
-		}, Assets.font30);
+		}, Assets.font30,new Color(0xFFDA77));
 		
 	}
 
@@ -55,27 +59,60 @@ public class LevelSelectorState extends State{
 	public void render(Graphics g) {
 		back.render(g);
 		int counter = 1;
-		g.setFont(Assets.font30);
+		Color solvedColor = new Color(0x02A79F);
+		Color unsolvedColor = new Color(0xC4C4C4);
 		
-		for(int i = 0; i < 5; i++) {
-			for (int j = 0; j < 6; j++) {
-				Rectangle bounds = new Rectangle(xOffset + j*DOUBLETILESIZE, yOffset + i*DOUBLETILESIZE, DOUBLETILESIZE, DOUBLETILESIZE);
+		//background image
+		g.drawImage(Assets.moon, -100, -50, null);
+		g.drawImage(Assets.uranus, 0, window.HEIGHT/2+20, null);
+		g.drawImage(Assets.jupiter, window.WIDTH/2+180, -100, null);
+		g.drawImage(Assets.saturn, window.WIDTH/2+150, window.HEIGHT/2, null);
+		
+		//header level
+		g.setFont(Assets.fontTitle);
+		Text.drawString(g, "Level", window.WIDTH/2, window.HEIGHT/9, true, new Color (0, 45, 42));
+		
+		for(int i = 0; i < 3; i++) {
+			for (int j = 0; j < 4; j++) {
+				//space column and row
+				int spaceX=j*70;
+				int spaceY=i*20;
+				
+				//set font
+				Rectangle bounds;
+				g.setFont(Assets.font22);
+				
+				g.fillRoundRect(xOffset + j*DOUBLETILESIZE+spaceX, yOffset + i*DOUBLETILESIZE+spaceY , DOUBLETILESIZE, DOUBLETILESIZE, 25, 25);
+				
+				//bounds for hover check
+				bounds = new Rectangle(xOffset + j*DOUBLETILESIZE+spaceX, yOffset + i*DOUBLETILESIZE+spaceY , DOUBLETILESIZE, DOUBLETILESIZE);
+				//condition for hover, get gameplay state
 				if(bounds.contains(MouseManager.x, MouseManager.y)) {
 					if(MouseManager.left && levels[counter-1].isSolved()) {
 						((GameState)window.getGameState()).setLevel(levels[counter-1]);
 						State.currentState = window.getGameState();
 					}
-					g.drawImage(Assets.outline2, bounds.x, bounds.y, null);
-					if(levels[counter-1].isSolved())
-						Text.drawString(g, counter+"", xOffset + j*DOUBLETILESIZE + DOUBLETILESIZE/2, yOffset + i*DOUBLETILESIZE + DOUBLETILESIZE/2, true, Color.RED);
-					else
-						Text.drawString(g, "?", xOffset + j*DOUBLETILESIZE + DOUBLETILESIZE/2, yOffset + i*DOUBLETILESIZE + DOUBLETILESIZE/2, true, Color.RED);
+					if(levels[counter-1].isSolved()) {
+						g.setColor(solvedColor.darker());
+						g.fillRoundRect(xOffset + j*DOUBLETILESIZE+spaceX, yOffset + i*DOUBLETILESIZE+spaceY , DOUBLETILESIZE, DOUBLETILESIZE, 25, 25);
+						Text.drawString(g, counter+"", xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2, yOffset + spaceY +i*DOUBLETILESIZE + DOUBLETILESIZE/2, true, Color.white.darker());
+					}	
+					else {
+						g.setColor(unsolvedColor.darker());
+						g.fillRoundRect(xOffset + j*DOUBLETILESIZE+spaceX, yOffset + i*DOUBLETILESIZE+spaceY , DOUBLETILESIZE, DOUBLETILESIZE, 25, 25);
+						Text.drawString(g, "?", xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2, yOffset + spaceY +i*DOUBLETILESIZE + DOUBLETILESIZE/2, true, Color.white.darker());
+					}	
 				} else {
-					g.drawImage(Assets.outline, bounds.x, bounds.y, null);
-					if(levels[counter-1].isSolved())
-						Text.drawString(g, counter+"", xOffset + j*DOUBLETILESIZE + DOUBLETILESIZE/2, yOffset + i*DOUBLETILESIZE + DOUBLETILESIZE/2, true, Color.GREEN);
-					else
-						Text.drawString(g, "?", xOffset + j*DOUBLETILESIZE + DOUBLETILESIZE/2, yOffset + i*DOUBLETILESIZE + DOUBLETILESIZE/2, true, Color.BLUE);
+					if(levels[counter-1].isSolved()) {
+						g.setColor(solvedColor);
+						g.fillRoundRect(xOffset + j*DOUBLETILESIZE+spaceX, yOffset + i*DOUBLETILESIZE+spaceY , DOUBLETILESIZE, DOUBLETILESIZE, 25, 25);
+						Text.drawString(g, counter+"", xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2, yOffset + spaceY + i*DOUBLETILESIZE + DOUBLETILESIZE/2, true, Color.white);
+					}
+					else {
+						g.setColor(unsolvedColor.darker());
+						g.fillRoundRect(xOffset + j*DOUBLETILESIZE+spaceX, yOffset + i*DOUBLETILESIZE+spaceY , DOUBLETILESIZE, DOUBLETILESIZE, 25, 25);
+						Text.drawString(g, "?", xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2, yOffset + spaceY + i*DOUBLETILESIZE + DOUBLETILESIZE/2, true, Color.white);
+					}	
 				}
 				counter++;
 			}

@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import com.sophiego.gfx.Assets;
 import com.sophiego.gfx.Text;
 import com.sophiego.main.Window;
@@ -23,19 +25,16 @@ public class MenuState extends State {
 			public void onClick() {
 				State.currentState = window.getLevelSelectorState();
 			}
-		}, Assets.font36));
-//		buttons.add(new Button("CREDITS", Window.WIDTH/2, Window.HEIGHT/2 + 135, new Click(){
-//			@Override
-//			public void onClick() {
-//				State.currentState = window.getLevelSelectorState();
-//			}
-//		}, Assets.font48));
+		}, Assets.font30,new Color(0x02A79F)));
+
 		buttons.add(new Button("EXIT", Window.WIDTH/2 + 100, Window.HEIGHT/2 + 125, new Click(){
 			@Override
 			public void onClick() {
-				System.exit(1);
+				int isCancel = JOptionPane.showConfirmDialog(null, "Are your sure?", "Exit Confirmation", JOptionPane.YES_NO_OPTION);
+				if (isCancel == 0)
+					System.exit(1);
 			}
-		}, Assets.font36));
+		}, Assets.font30,new Color(0xFF4646)));
 	}
 
 	@Override
@@ -44,7 +43,7 @@ public class MenuState extends State {
 			buttons.get(i).update();
 	}
 
-	@Override
+	@Override	
 	public void render(Graphics g) {
 		g.drawImage(Assets.logo, Window.WIDTH/2 - Assets.LOGOSIZE/2, Window.HEIGHT/2 - 240, null);
 		

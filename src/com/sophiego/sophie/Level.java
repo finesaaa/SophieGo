@@ -1,5 +1,6 @@
 package com.sophiego.sophie;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -52,7 +53,8 @@ public class Level {
 			for (int col = 0; col < maze[row].length; col++)
 			{
 				copy[row][col] = maze[row][col];
-				if (maze[row][col] == 3) this.target_num_coin++;
+				if (maze[row][col] == 3) 
+					this.target_num_coin++;
 			}
 				
 			
@@ -79,14 +81,13 @@ public class Level {
 				@Override
 				public void onClick() {
 					reset();
-				}},
-					Assets.font30);
+				}}, Assets.font30,new Color(0x02A79F));
 			back = new Button("BACK", Window.WIDTH - 100, Window.HEIGHT/2, new Click() {
 				@Override
 				public void onClick() {
 					State.currentState = levelSelectorState;
 				}
-			}, Assets.font30);
+			}, Assets.font30,new Color(0x02A79F));
 			coinPanel = new CoinPanel("Coin: ", num_coin, target_num_coin, 120, 50, Assets.font30);
 			stepCounterPanel = new StepCounterPanel("Step: ", num_step, Window.WIDTH - 120, 50, Assets.font30);
 			time = 0;
