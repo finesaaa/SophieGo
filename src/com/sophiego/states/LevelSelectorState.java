@@ -19,23 +19,13 @@ import com.sophiego.states.State;
 
 public class LevelSelectorState extends State{
 	
-<<<<<<< HEAD
-	private final int DOUBLETILESIZE = 100;
+	private final int DOUBLETILESIZE = 80;
 	private Level[] levels = new Level[15];
-	
-	private final int xOffset = (Window.WIDTH - DOUBLETILESIZE*5 - 10)/2;
-	private final int yOffset = (Window.HEIGHT - DOUBLETILESIZE*4 - 10)/2;
-=======
-	private final int DOUBLETILESIZE = 74;
-	private Level[] levels = new Level[30];
-	
-	private final int xOffset = (Window.WIDTH - DOUBLETILESIZE*7)/2;
-	private final int yOffset = (Window.HEIGHT - DOUBLETILESIZE*4)/2;
 	private final int SPACE = 10;
 	
-//	private final int xOffset = (Window.WIDTH - DOUBLETILESIZE*4)/2;
-//	private final int yOffset = (Window.HEIGHT - DOUBLETILESIZE*2)/2;
->>>>>>> origin/alex
+	private final int xOffset = (Window.WIDTH - (DOUBLETILESIZE + SPACE * 4)*5)/2;
+	private final int yOffset = (Window.HEIGHT - (DOUBLETILESIZE + SPACE * 2)*3)/2;
+	
 	
 	private Button back;
 	
@@ -76,54 +66,33 @@ public class LevelSelectorState extends State{
 		g.drawImage(Assets.jupiter, window.WIDTH/2+180, -100, null);
 		g.drawImage(Assets.saturn, window.WIDTH/2+150, window.HEIGHT/2, null);
 		
-<<<<<<< HEAD
-		for(int i = 0; i < 3; i++) {
-			for (int j = 0; j < 5; j++) {
-				Rectangle bounds = new Rectangle(xOffset + j*DOUBLETILESIZE, yOffset + i*DOUBLETILESIZE, DOUBLETILESIZE, DOUBLETILESIZE);
-				State.currentArrLevel = levels[counter - 1];
-//				System.out.println("counter out "  + counter);
-=======
 		//header level
 		g.setFont(Assets.fontTitle);
 		Text.drawString(g, "Level", window.WIDTH/2, window.HEIGHT/9, true, new Color (0, 45, 42));
 		
 		for(int i = 0; i < 3; i++) {
-			for (int j = 0; j < 4; j++) {
+			for (int j = 0; j < 5; j++) {
+			
+				State.currentArrLevel = levels[counter - 1];
+
 				//space column and row
-				int spaceX=j*70;
-				int spaceY=i*20;
+				int spaceX = j * 45;
+				int spaceY = i * 20;
 				
-				//set font
-				Rectangle bounds;
 				g.setFont(Assets.font22);
-				
-				g.fillRoundRect(xOffset + j*DOUBLETILESIZE+spaceX, yOffset + i*DOUBLETILESIZE+spaceY , DOUBLETILESIZE, DOUBLETILESIZE, 25, 25);
+				g.fillRoundRect(xOffset + j * DOUBLETILESIZE + spaceX, yOffset + i * DOUBLETILESIZE + spaceY , DOUBLETILESIZE, DOUBLETILESIZE, 25, 25);
 				
 				//bounds for hover check
-				bounds = new Rectangle(xOffset + j*DOUBLETILESIZE+spaceX, yOffset + i*DOUBLETILESIZE+spaceY , DOUBLETILESIZE, DOUBLETILESIZE);
-				//condition for hover, get gameplay state
->>>>>>> origin/alex
+				Rectangle bounds = new Rectangle(xOffset + j*DOUBLETILESIZE + spaceX, yOffset + i * DOUBLETILESIZE + spaceY , DOUBLETILESIZE, DOUBLETILESIZE);
+				
+				//condition for hover, get Game Play state
 				if(bounds.contains(MouseManager.x, MouseManager.y)) {
 					if(MouseManager.left && State.currentArrLevel.isSolved()) {
-//						System.out.println("counter "  + counter);
+						// System.out.println("counter "  + counter);
 						((GameState)window.getGameState()).setLevel(State.currentArrLevel);
 						State.currentState = window.getGameState();
 					}
-<<<<<<< HEAD
-					g.drawImage(Assets.outline2, bounds.x, bounds.y, null);
 					if(State.currentArrLevel.isSolved()) {
-						Text.drawString(g, counter+"", xOffset + j*DOUBLETILESIZE + DOUBLETILESIZE/2, yOffset + i*DOUBLETILESIZE + DOUBLETILESIZE/2, true, Color.RED);
-					} else {
-						Text.drawString(g, "?", xOffset + j*DOUBLETILESIZE + DOUBLETILESIZE/2, yOffset + i*DOUBLETILESIZE + DOUBLETILESIZE/2, true, Color.RED);
-					}
-				} else {
-					g.drawImage(Assets.outline, bounds.x, bounds.y, null);
-					if(State.currentArrLevel.isSolved())
-						Text.drawString(g, counter+"", xOffset + j*DOUBLETILESIZE + DOUBLETILESIZE/2, yOffset + i*DOUBLETILESIZE + DOUBLETILESIZE/2, true, Color.GREEN);
-					else
-						Text.drawString(g, "?", xOffset + j*DOUBLETILESIZE + DOUBLETILESIZE/2, yOffset + i*DOUBLETILESIZE + DOUBLETILESIZE/2, true, Color.BLUE);
-=======
-					if(levels[counter-1].isSolved()) {
 						g.setColor(solvedColor.darker());
 						g.fillRoundRect(xOffset + j*DOUBLETILESIZE+spaceX, yOffset + i*DOUBLETILESIZE+spaceY , DOUBLETILESIZE, DOUBLETILESIZE, 25, 25);
 						Text.drawString(g, counter+"", xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2, yOffset + spaceY +i*DOUBLETILESIZE + DOUBLETILESIZE/2, true, Color.white.darker());
@@ -134,7 +103,7 @@ public class LevelSelectorState extends State{
 						Text.drawString(g, "?", xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2, yOffset + spaceY +i*DOUBLETILESIZE + DOUBLETILESIZE/2, true, Color.white.darker());
 					}	
 				} else {
-					if(levels[counter-1].isSolved()) {
+					if(State.currentArrLevel.isSolved()) {
 						g.setColor(solvedColor);
 						g.fillRoundRect(xOffset + j*DOUBLETILESIZE+spaceX, yOffset + i*DOUBLETILESIZE+spaceY , DOUBLETILESIZE, DOUBLETILESIZE, 25, 25);
 						Text.drawString(g, counter+"", xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2, yOffset + spaceY + i*DOUBLETILESIZE + DOUBLETILESIZE/2, true, Color.white);
@@ -144,7 +113,6 @@ public class LevelSelectorState extends State{
 						g.fillRoundRect(xOffset + j*DOUBLETILESIZE+spaceX, yOffset + i*DOUBLETILESIZE+spaceY , DOUBLETILESIZE, DOUBLETILESIZE, 25, 25);
 						Text.drawString(g, "?", xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2, yOffset + spaceY + i*DOUBLETILESIZE + DOUBLETILESIZE/2, true, Color.white);
 					}	
->>>>>>> origin/alex
 				}
 				counter++;
 			}

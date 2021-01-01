@@ -24,7 +24,7 @@ public class ResultState extends State{
 				State.currentState = window.getLevelSelectorState();
 			}
 			
-		}, Assets.font30);
+		}, Assets.font30, Assets.mColor);
 		
 //		try_again = new Button("TRY AGAIN", Window.WIDTH/2 + 100, Window.HEIGHT/2 + 75, new Click() {
 //			

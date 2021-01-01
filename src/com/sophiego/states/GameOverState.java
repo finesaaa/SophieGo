@@ -25,7 +25,7 @@ public class GameOverState extends State{
 				State.currentState = window.getGameState();
 			}
 			
-		}, Assets.font30);
+		}, Assets.font30, Assets.mColor);
 	}
 
 	@Override

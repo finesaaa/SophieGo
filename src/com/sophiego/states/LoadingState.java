@@ -43,11 +43,7 @@ public class LoadingState extends State {
 
 	@Override
 	public void render(Graphics g) {
-<<<<<<< HEAD
 		g.setFont(Assets.fontLoading);
-=======
-		g.setFont(Assets.square48);
->>>>>>> origin/alex
 		Text.drawString(g, text, Window.WIDTH/2, Window.HEIGHT/2, true, Assets.mColor);
 	}
 

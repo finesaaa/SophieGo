@@ -18,16 +18,10 @@ public class Assets {
 	public static final Color mColor = new Color(2, 167, 159);
 	public static final Color sColor = new Color(255, 70, 70);
 	
-<<<<<<< HEAD
-	public static Image logo, flag, star, star_outline;
+	public static Image logo, flag, star, star_outline, ufo;
 	public static Image playerLeft, playerBack, playerRight, PlayerFront, playerDead;
-	public static Image floor, floor2, wall, boxOn, boxOff, spot, outline, outline2, ufo, planet1;
-=======
-	public static Image playerLeft, playerBack, playerRight, PlayerFront, flag;
 	public static Image floor, floor2, wall, boxOn, boxOff, spot, outline, outline2;
-	public static Image ufo, planet1, logo;
-	public static Image moon,uranus,jupiter,saturn;
->>>>>>> origin/alex
+	public static Image moon,uranus,jupiter,saturn, planet1;
 	
 	public static Font square48;
 	public static Font font48;

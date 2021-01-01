@@ -1,10 +1,7 @@
 package com.sophiego.sophie;
 
-<<<<<<< HEAD
 import java.awt.FontMetrics;
-=======
 import java.awt.Color;
->>>>>>> origin/alex
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -61,16 +58,11 @@ public class Level {
 			for (int col = 0; col < maze[row].length; col++)
 			{
 				copy[row][col] = maze[row][col];
-<<<<<<< HEAD
 				if (maze[row][col] == 3) this.target_num_coin++;
 				if (maze[row][col] == 5) {
 					plaEndRow = row;
 					plaEndCol = col;
 				}
-=======
-				if (maze[row][col] == 3) 
-					this.target_num_coin++;
->>>>>>> origin/alex
 			}
 				
 			plaStartRow = player_row;
@@ -173,7 +165,7 @@ public class Level {
 				
 		levelSelectorState.getLevels()[id].setSolved(true);
 		if (levelSelectorState.getLevels()[id].isSolved()) {
-			System.out.println("I'm here boy "+id);
+//			System.out.println("I'm here boy "+id);
 			State.currentLevel = id;
 			levelSelectorState.showResult();
 		}
@@ -204,8 +196,8 @@ public class Level {
 		back.render(g);
 		coinPanel.render(g);
 		stepCounterPanel.render(g);
-		System.out.print(State.currentLevel);
-		this.text = "Level " + (State.currentLevel + 1);
+//		System.out.print(State.currentLevel);
+		this.text = "Level " + (State.currentLevel);
 		g.setFont(Assets.fontLevel);
 		g.setColor(Assets.mColor);
 		fm = g.getFontMetrics();
