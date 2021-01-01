@@ -148,13 +148,24 @@ public class Level {
 		for(int row = 0; row < maze.length; row++)
 			for(int col = 0; col < maze[row].length; col++)
 			{
-				if(num_step > target_num_step) reset();
+				if (num_step == target_num_step) {
+					texture = Assets.playerDead;
+				}
+				if(num_step > target_num_step) {
+					try {
+						Thread.sleep(600);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+//					levelSelectorState.showGameOver();
+					reset();
+				}
 				if(maze[row][col] == 3 || maze[row][col] == 5) return;
 			}
 				
 		levelSelectorState.getLevels()[id].setSolved(true);
 		if (levelSelectorState.getLevels()[id].isSolved()) {
-//			System.out.println("I'm here boy "+id);
+			System.out.println("I'm here boy "+id);
 			State.currentLevel = id;
 			levelSelectorState.showResult();
 		}
@@ -185,7 +196,7 @@ public class Level {
 		back.render(g);
 		coinPanel.render(g);
 		stepCounterPanel.render(g);
-		
+		System.out.print(State.currentLevel);
 		this.text = "Level " + (State.currentLevel + 1);
 		g.setFont(Assets.fontLevel);
 		g.setColor(Assets.mColor);

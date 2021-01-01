@@ -19,11 +19,11 @@ import com.sophiego.states.State;
 
 public class LevelSelectorState extends State{
 	
-	private final int DOUBLETILESIZE = 64;
+	private final int DOUBLETILESIZE = 100;
 	private Level[] levels = new Level[15];
 	
-	private final int xOffset = (Window.WIDTH - DOUBLETILESIZE*5)/2;
-	private final int yOffset = (Window.HEIGHT - DOUBLETILESIZE*6)/2;
+	private final int xOffset = (Window.WIDTH - DOUBLETILESIZE*5 - 10)/2;
+	private final int yOffset = (Window.HEIGHT - DOUBLETILESIZE*4 - 10)/2;
 	
 	private Button back;
 	
@@ -60,21 +60,23 @@ public class LevelSelectorState extends State{
 		for(int i = 0; i < 3; i++) {
 			for (int j = 0; j < 5; j++) {
 				Rectangle bounds = new Rectangle(xOffset + j*DOUBLETILESIZE, yOffset + i*DOUBLETILESIZE, DOUBLETILESIZE, DOUBLETILESIZE);
+				State.currentArrLevel = levels[counter - 1];
+//				System.out.println("counter out "  + counter);
 				if(bounds.contains(MouseManager.x, MouseManager.y)) {
-					if(MouseManager.left && levels[counter-1].isSolved()) {
+					if(MouseManager.left && State.currentArrLevel.isSolved()) {
 //						System.out.println("counter "  + counter);
-//						State.currentArrLevel = levels[counter-1];
-						((GameState)window.getGameState()).setLevel(levels[counter-1]);
+						((GameState)window.getGameState()).setLevel(State.currentArrLevel);
 						State.currentState = window.getGameState();
 					}
 					g.drawImage(Assets.outline2, bounds.x, bounds.y, null);
-					if(levels[counter-1].isSolved())
+					if(State.currentArrLevel.isSolved()) {
 						Text.drawString(g, counter+"", xOffset + j*DOUBLETILESIZE + DOUBLETILESIZE/2, yOffset + i*DOUBLETILESIZE + DOUBLETILESIZE/2, true, Color.RED);
-					else
+					} else {
 						Text.drawString(g, "?", xOffset + j*DOUBLETILESIZE + DOUBLETILESIZE/2, yOffset + i*DOUBLETILESIZE + DOUBLETILESIZE/2, true, Color.RED);
+					}
 				} else {
 					g.drawImage(Assets.outline, bounds.x, bounds.y, null);
-					if(levels[counter-1].isSolved())
+					if(State.currentArrLevel.isSolved())
 						Text.drawString(g, counter+"", xOffset + j*DOUBLETILESIZE + DOUBLETILESIZE/2, yOffset + i*DOUBLETILESIZE + DOUBLETILESIZE/2, true, Color.GREEN);
 					else
 						Text.drawString(g, "?", xOffset + j*DOUBLETILESIZE + DOUBLETILESIZE/2, yOffset + i*DOUBLETILESIZE + DOUBLETILESIZE/2, true, Color.BLUE);
@@ -133,6 +135,10 @@ public class LevelSelectorState extends State{
 
 	public void showResult() {
 		State.currentState = window.getResultState();
+	}
+	
+	public void showGameOver() {
+		State.currentState = window.getGameOverState();
 	}
 	
 	public Level[] getLevels() {

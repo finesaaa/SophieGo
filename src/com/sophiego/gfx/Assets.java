@@ -19,7 +19,7 @@ public class Assets {
 	public static final Color sColor = new Color(255, 70, 70);
 	
 	public static Image logo, flag, star, star_outline;
-	public static Image playerLeft, playerBack, playerRight, PlayerFront;
+	public static Image playerLeft, playerBack, playerRight, PlayerFront, playerDead;
 	public static Image floor, floor2, wall, boxOn, boxOff, spot, outline, outline2, ufo, planet1;
 	
 	public static Font font48;
@@ -35,14 +35,15 @@ public class Assets {
 		playerBack = loadImage("/player/back.png").getScaledInstance(Level.TILESIZE, Level.TILESIZE, BufferedImage.SCALE_DEFAULT);
 		PlayerFront = loadImage("/player/front.png").getScaledInstance(Level.TILESIZE, Level.TILESIZE, BufferedImage.SCALE_DEFAULT);
 		playerRight = loadImage("/player/right.png").getScaledInstance(Level.TILESIZE, Level.TILESIZE, BufferedImage.SCALE_DEFAULT);
+		playerDead = loadImage("/player/dead.png").getScaledInstance(Level.TILESIZE, Level.TILESIZE, BufferedImage.SCALE_DEFAULT);
 		
 		floor = loadImage("/blocks/ground.png").getScaledInstance(TILESIZE, TILESIZE, BufferedImage.SCALE_DEFAULT);
 		floor2 = loadImage("/blocks/ground2.png").getScaledInstance(TILESIZE, TILESIZE, BufferedImage.SCALE_DEFAULT);
 		wall = loadImage("/blocks/redBrick.png").getScaledInstance(TILESIZE, TILESIZE, BufferedImage.SCALE_DEFAULT);
 		boxOn = loadImage("/blocks/ground_01.png").getScaledInstance(Level.TILESIZE, Level.TILESIZE, BufferedImage.SCALE_DEFAULT);
 		spot = loadImage("/blocks/coin.png").getScaledInstance(Level.TILESIZE, Level.TILESIZE, BufferedImage.SCALE_DEFAULT);
-		outline = loadImage("/blocks/outline.png").getScaledInstance(64, 64, BufferedImage.SCALE_DEFAULT);
-		outline2 = loadImage("/blocks/outline2.png").getScaledInstance(64, 64, BufferedImage.SCALE_DEFAULT);
+		outline = loadImage("/blocks/outline.png").getScaledInstance(100, 100, BufferedImage.SCALE_DEFAULT);
+		outline2 = loadImage("/blocks/outline2.png").getScaledInstance(100, 100, BufferedImage.SCALE_DEFAULT);
 		flag = loadImage("/blocks/flag.png").getScaledInstance(64, 64, BufferedImage.SCALE_DEFAULT);
 		star = loadImage("/blocks/star.png").getScaledInstance(64, 64, BufferedImage.SCALE_DEFAULT);
 		star_outline = loadImage("/blocks/star_outline.png").getScaledInstance(64, 64, BufferedImage.SCALE_DEFAULT);

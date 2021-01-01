@@ -12,6 +12,7 @@ import com.sophiego.gfx.Assets;
 import com.sophiego.input.KeyBoard;
 import com.sophiego.input.MouseManager;
 import com.sophiego.sophie.Level;
+import com.sophiego.states.GameOverState;
 import com.sophiego.states.GameState;
 import com.sophiego.states.LevelSelectorState;
 import com.sophiego.states.LoadingState;
@@ -39,6 +40,7 @@ public class Window extends JFrame implements Runnable {
 	private MenuState menuState;
 	private LoadingState loadingState;
 	private ResultState resultState;
+	private GameOverState gameOverState;
 	
 	private KeyBoard keyBoard;
 	private MouseManager mouseManager;
@@ -115,6 +117,7 @@ public class Window extends JFrame implements Runnable {
 		loadingState = new LoadingState(this);
 		levelSelectorState = new LevelSelectorState(this);
 		resultState = new ResultState(this);
+		gameOverState = new GameOverState(this);
 		State.currentState = loadingState;
 	}
 	
@@ -180,5 +183,8 @@ public class Window extends JFrame implements Runnable {
 		return resultState;
 	}
 
+	public State getGameOverState() {
+		return gameOverState;
+	}
 
 }
