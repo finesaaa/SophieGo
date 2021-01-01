@@ -10,7 +10,7 @@ import com.sophiego.states.State;
 
 public class LoadingState extends State {
 
-	private final String NAME = "H E L L O  W O R L D . . . ";
+	private final String NAME = "HELLO  THERE . . . ";
 	private String text = "";
 	private int index = 0;
 	private long time, lastTime;
@@ -43,7 +43,11 @@ public class LoadingState extends State {
 
 	@Override
 	public void render(Graphics g) {
+<<<<<<< HEAD
 		g.setFont(Assets.fontLoading);
+=======
+		g.setFont(Assets.square48);
+>>>>>>> origin/alex
 		Text.drawString(g, text, Window.WIDTH/2, Window.HEIGHT/2, true, Assets.mColor);
 	}
 

@@ -18,10 +18,18 @@ public class Assets {
 	public static final Color mColor = new Color(2, 167, 159);
 	public static final Color sColor = new Color(255, 70, 70);
 	
+<<<<<<< HEAD
 	public static Image logo, flag, star, star_outline;
 	public static Image playerLeft, playerBack, playerRight, PlayerFront, playerDead;
 	public static Image floor, floor2, wall, boxOn, boxOff, spot, outline, outline2, ufo, planet1;
+=======
+	public static Image playerLeft, playerBack, playerRight, PlayerFront, flag;
+	public static Image floor, floor2, wall, boxOn, boxOff, spot, outline, outline2;
+	public static Image ufo, planet1, logo;
+	public static Image moon,uranus,jupiter,saturn;
+>>>>>>> origin/alex
 	
+	public static Font square48;
 	public static Font font48;
 	public static Font font30;
 	public static Font font22;
@@ -31,12 +39,14 @@ public class Assets {
 	
 	public static void init()
 	{
+		//player image
 		playerLeft = loadImage("/player/left.png").getScaledInstance(Level.TILESIZE, Level.TILESIZE, BufferedImage.SCALE_DEFAULT);
 		playerBack = loadImage("/player/back.png").getScaledInstance(Level.TILESIZE, Level.TILESIZE, BufferedImage.SCALE_DEFAULT);
 		PlayerFront = loadImage("/player/front.png").getScaledInstance(Level.TILESIZE, Level.TILESIZE, BufferedImage.SCALE_DEFAULT);
 		playerRight = loadImage("/player/right.png").getScaledInstance(Level.TILESIZE, Level.TILESIZE, BufferedImage.SCALE_DEFAULT);
 		playerDead = loadImage("/player/dead.png").getScaledInstance(Level.TILESIZE, Level.TILESIZE, BufferedImage.SCALE_DEFAULT);
 		
+		//map
 		floor = loadImage("/blocks/ground.png").getScaledInstance(TILESIZE, TILESIZE, BufferedImage.SCALE_DEFAULT);
 		floor2 = loadImage("/blocks/ground2.png").getScaledInstance(TILESIZE, TILESIZE, BufferedImage.SCALE_DEFAULT);
 		wall = loadImage("/blocks/redBrick.png").getScaledInstance(TILESIZE, TILESIZE, BufferedImage.SCALE_DEFAULT);
@@ -48,10 +58,19 @@ public class Assets {
 		star = loadImage("/blocks/star.png").getScaledInstance(64, 64, BufferedImage.SCALE_DEFAULT);
 		star_outline = loadImage("/blocks/star_outline.png").getScaledInstance(64, 64, BufferedImage.SCALE_DEFAULT);
 		
+		//menu state
 		logo = loadImage("/blocks/logo-hd.png").getScaledInstance(LOGOSIZE, LOGOSIZE, BufferedImage.SCALE_DEFAULT);
 		ufo = loadImage("/blocks/ufo 2.png").getScaledInstance(420, 420, BufferedImage.SCALE_DEFAULT);
 		planet1 = loadImage("/blocks/planet1.png").getScaledInstance(360, 360, BufferedImage.SCALE_DEFAULT);
 		
+		//level selector state
+		moon = loadImage("/blocks/moon 1.png").getScaledInstance(LOGOSIZE, LOGOSIZE, BufferedImage.SCALE_DEFAULT);
+		uranus = loadImage("/blocks/uranus 1.png").getScaledInstance(LOGOSIZE, LOGOSIZE, BufferedImage.SCALE_DEFAULT);
+		jupiter = loadImage("/blocks/jupiter 1.png").getScaledInstance(360, 360, BufferedImage.SCALE_DEFAULT);
+		saturn = loadImage("/blocks/saturn (1) 2.png").getScaledInstance(360, 360, BufferedImage.SCALE_DEFAULT);
+		
+		//font
+		square48 = loadFont("res/fonts/square.ttf", 48);
 		font48 = loadFont("res/fonts/Poppins-SemiBold.ttf", 48);
 		font22 = loadFont("res/fonts/Poppins-SemiBold.ttf", 22);
 		font30 = loadFont("res/fonts/Poppins-SemiBold.ttf", 30);

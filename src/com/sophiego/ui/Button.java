@@ -19,14 +19,16 @@ public class Button {
 	private boolean hovering;
 	private Click click;
 	private Font font;
+	private Color color;
 	
-	public Button(String text, int x, int y, Click click, Font font) {
+	public Button(String text, int x, int y, Click click, Font font, Color color) {
 		this.text = text;
 		this.x = x;
 		this.y = y;
 		this.click = click;
 		hovering = false;
 		this.font = font;
+		this.color = color;
 	}
 
 	public void update() {
@@ -43,14 +45,14 @@ public class Button {
 		g.setFont(font);
 		fm = g.getFontMetrics();
 		if(hovering) {
-			g.setColor(Assets.sColor);
+			Color darkColor = color.darker();
+			g.setColor(darkColor);
 			g.fillRoundRect(x - fm.stringWidth(text)/2 - 20, y - fm.getHeight()/2 - 3, fm.stringWidth(text) + 40, fm.getHeight() + 6, 50, 50);
-			Text.drawString(g, text, x, y, true, Color.WHITE);
-		}
-			
+			Text.drawString(g, text, x, y, true, new Color(0xCCCCCC));
+		}	
 		else
 		{
-			g.setColor(Assets.mColor);
+			g.setColor(color);
 			g.fillRoundRect(x - fm.stringWidth(text)/2 - 20, y - fm.getHeight()/2 - 3, fm.stringWidth(text) + 40, fm.getHeight() + 6, 50, 50);
 			Text.drawString(g, text, x, y, true, Color.WHITE);
 		}
