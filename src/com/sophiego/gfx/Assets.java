@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.sophiego.main.Window;
 import com.sophiego.sophie.Level;
 
 public class Assets {
@@ -18,10 +19,11 @@ public class Assets {
 	public static final Color mColor = new Color(2, 167, 159);
 	public static final Color sColor = new Color(255, 70, 70);
 	
-	public static Image logo, flag, star, star_outline, ufo;
+	public static Image logo, flag, star, mini_star,mini_star_outline, star_outline, ufo;
 	public static Image playerLeft, playerBack, playerRight, PlayerFront, playerDead;
 	public static Image floor, floor2, wall, boxOn, boxOff, spot, outline, outline2;
 	public static Image moon,uranus,jupiter,saturn, planet1;
+	public static Image splashBG, spaceBG;
 	
 	public static Font square48;
 	public static Font font48;
@@ -51,7 +53,8 @@ public class Assets {
 		flag = loadImage("/blocks/flag.png").getScaledInstance(64, 64, BufferedImage.SCALE_DEFAULT);
 		star = loadImage("/blocks/star.png").getScaledInstance(64, 64, BufferedImage.SCALE_DEFAULT);
 		star_outline = loadImage("/blocks/star_outline.png").getScaledInstance(64, 64, BufferedImage.SCALE_DEFAULT);
-		
+		mini_star = loadImage("/blocks/star.png").getScaledInstance(14, 14, BufferedImage.SCALE_DEFAULT);
+		mini_star_outline =  loadImage("/blocks/star_outline.png").getScaledInstance(14, 14, BufferedImage.SCALE_DEFAULT);
 		//menu state
 		logo = loadImage("/blocks/logo-hd.png").getScaledInstance(LOGOSIZE, LOGOSIZE, BufferedImage.SCALE_DEFAULT);
 		ufo = loadImage("/blocks/ufo 2.png").getScaledInstance(420, 420, BufferedImage.SCALE_DEFAULT);
@@ -63,6 +66,10 @@ public class Assets {
 		jupiter = loadImage("/blocks/jupiter 1.png").getScaledInstance(360, 360, BufferedImage.SCALE_DEFAULT);
 		saturn = loadImage("/blocks/saturn (1) 2.png").getScaledInstance(360, 360, BufferedImage.SCALE_DEFAULT);
 		
+		//background
+		splashBG = loadImage("/blocks/splash.png").getScaledInstance(Window.WIDTH, Window.HEIGHT, BufferedImage.SCALE_DEFAULT);
+//		spaceBG = loadImage("/blocks/space.jpg").getScaledInstance(Window.WIDTH, Window.HEIGHT, BufferedImage.SCALE_DEFAULT);
+		
 		//font
 		square48 = loadFont("res/fonts/square.ttf", 48);
 		font48 = loadFont("res/fonts/Poppins-SemiBold.ttf", 48);
@@ -73,7 +80,11 @@ public class Assets {
 		fontLoading = loadFont("res/fonts/square.ttf", 32);
 		fontLevel = loadFont("res/fonts/square.ttf", 30);
 	}
-	
+
+	public static void setStar(Image star) {
+		Assets.star = star;
+	}
+
 	public static BufferedImage loadImage(String path)
 	{
 		try {

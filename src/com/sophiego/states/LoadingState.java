@@ -43,6 +43,7 @@ public class LoadingState extends State {
 
 	@Override
 	public void render(Graphics g) {
+		g.drawImage(Assets.splashBG, 0, 0, null);
 		g.setFont(Assets.fontLoading);
 		Text.drawString(g, text, Window.WIDTH/2, Window.HEIGHT/2, true, Assets.mColor);
 	}

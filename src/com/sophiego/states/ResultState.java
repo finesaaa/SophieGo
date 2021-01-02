@@ -48,7 +48,7 @@ public class ResultState extends State{
 	public void render(Graphics g) {
 		back.render(g);
 //		try_again.render(g);
-		this.text = "You've passed level " + State.currentLevel;
+		this.text = "You've passed level " + (State.currentLevel - 1);
 		
 		g.setFont(Assets.fontLoading);
 		g.setColor(Assets.mColor);

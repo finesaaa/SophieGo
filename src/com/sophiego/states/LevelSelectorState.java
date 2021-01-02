@@ -4,15 +4,22 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.RandomAccessFile;
 
 import com.sophiego.gfx.Assets;
 import com.sophiego.gfx.Text;
 import com.sophiego.input.MouseManager;
 import com.sophiego.main.Window;
 import com.sophiego.sophie.Level;
+import com.sophiego.sophie.SelectedLevel;
 import com.sophiego.ui.Button;
 import com.sophiego.ui.Click;
 import com.sophiego.states.State;
@@ -20,7 +27,8 @@ import com.sophiego.states.State;
 public class LevelSelectorState extends State{
 	
 	private final int DOUBLETILESIZE = 80;
-	private Level[] levels = new Level[15];
+	private final int NUMLEVEL = 15;
+	private Level[] levels = new Level[NUMLEVEL];
 	private final int SPACE = 10;
 	
 	private final int xOffset = (Window.WIDTH - (DOUBLETILESIZE + SPACE * 4)*5)/2;
@@ -33,7 +41,7 @@ public class LevelSelectorState extends State{
 		super(window);
 		
 		for(int i = 0; i < levels.length; i++)
-			levels[i] = loadLevel("/levels/" + i + ".txt");
+			levels[i] = loadLevel("/levels/" + i + ".txt", i);
 		
 		back = new Button("BACK", Window.WIDTH/2, Window.HEIGHT - 100, new Click() {
 			
@@ -73,7 +81,10 @@ public class LevelSelectorState extends State{
 		for(int i = 0; i < 3; i++) {
 			for (int j = 0; j < 5; j++) {
 			
-				State.currentArrLevel = levels[counter - 1];
+//				System.out.println("counter");
+//				State.currentLevel = counter;
+				if (i == 0 && j == 0) State.currentArrLevel = levels[0];
+				else State.currentArrLevel = levels[counter - 1];
 
 				//space column and row
 				int spaceX = j * 45;
@@ -87,32 +98,54 @@ public class LevelSelectorState extends State{
 				
 				//condition for hover, get Game Play state
 				if(bounds.contains(MouseManager.x, MouseManager.y)) {
-					if(MouseManager.left && State.currentArrLevel.isSolved()) {
-						// System.out.println("counter "  + counter);
+					if(MouseManager.left && State.currentArrLevel.isPlayed()) {
+						 System.out.println("playing");
+						
 						((GameState)window.getGameState()).setLevel(State.currentArrLevel);
 						State.currentState = window.getGameState();
 					}
-					if(State.currentArrLevel.isSolved()) {
+					if(State.currentArrLevel.isPlayed()) {
 						g.setColor(solvedColor.darker());
 						g.fillRoundRect(xOffset + j*DOUBLETILESIZE+spaceX, yOffset + i*DOUBLETILESIZE+spaceY , DOUBLETILESIZE, DOUBLETILESIZE, 25, 25);
-						Text.drawString(g, counter+"", xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2, yOffset + spaceY +i*DOUBLETILESIZE + DOUBLETILESIZE/2, true, Color.white.darker());
+						 System.out.println("A");
+						Text.drawString(g, counter+"", xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2, yOffset + spaceY +i*DOUBLETILESIZE + DOUBLETILESIZE/2 - 6, true, Color.white.darker());
 					}	
 					else {
 						g.setColor(unsolvedColor.darker());
 						g.fillRoundRect(xOffset + j*DOUBLETILESIZE+spaceX, yOffset + i*DOUBLETILESIZE+spaceY , DOUBLETILESIZE, DOUBLETILESIZE, 25, 25);
-						Text.drawString(g, "?", xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2, yOffset + spaceY +i*DOUBLETILESIZE + DOUBLETILESIZE/2, true, Color.white.darker());
+						System.out.println("B");
+//						if(State.currentArrLevel.isSolved()) {
+//							for (int s = 0;  s < 3; s++) 
+//								g.drawImage(Assets.mini_star_outline, xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2 + 20 * s - DOUBLETILESIZE/3, yOffset + spaceY + i*DOUBLETILESIZE + DOUBLETILESIZE/2 + 10, null);
+//						}
+						Text.drawString(g, "?", xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2, yOffset + spaceY +i*DOUBLETILESIZE + DOUBLETILESIZE/2 - 6, true, Color.white.darker());
 					}	
 				} else {
-					if(State.currentArrLevel.isSolved()) {
+					if(State.currentArrLevel.isPlayed()) {
 						g.setColor(solvedColor);
 						g.fillRoundRect(xOffset + j*DOUBLETILESIZE+spaceX, yOffset + i*DOUBLETILESIZE+spaceY , DOUBLETILESIZE, DOUBLETILESIZE, 25, 25);
-						Text.drawString(g, counter+"", xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2, yOffset + spaceY + i*DOUBLETILESIZE + DOUBLETILESIZE/2, true, Color.white);
+//						System.out.println("C");
+//						if(State.currentArrLevel.isSolved()) {
+//							for (int s = 0;  s < 3; s++) 
+//								g.drawImage(Assets.mini_star, xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2 + 20 * s - DOUBLETILESIZE/3, yOffset + spaceY + i*DOUBLETILESIZE + DOUBLETILESIZE/2 + 10, null);
+//						}
+						Text.drawString(g, counter+"", xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2, yOffset + spaceY + i*DOUBLETILESIZE + DOUBLETILESIZE/2 - 6, true, Color.white);
 					}
 					else {
-						g.setColor(unsolvedColor.darker());
+						g.setColor(unsolvedColor);
 						g.fillRoundRect(xOffset + j*DOUBLETILESIZE+spaceX, yOffset + i*DOUBLETILESIZE+spaceY , DOUBLETILESIZE, DOUBLETILESIZE, 25, 25);
-						Text.drawString(g, "?", xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2, yOffset + spaceY + i*DOUBLETILESIZE + DOUBLETILESIZE/2, true, Color.white);
+//						System.out.println("D");
+//						if(State.currentArrLevel.isSolved()) {
+//							for (int s = 0;  s < 3; s++) 
+//								g.drawImage(Assets.mini_star_outline, xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2 + 20 * s - DOUBLETILESIZE/3, yOffset + spaceY + i*DOUBLETILESIZE + DOUBLETILESIZE/2 + 10, null);
+//						}
+						Text.drawString(g, "?", xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2, yOffset + spaceY + i*DOUBLETILESIZE + DOUBLETILESIZE/2 - 6, true, Color.white);
 					}	
+				}
+				if(State.currentArrLevel.isSolved()) {
+					System.out.println("MASUK  GA TUH " + State.currentLevel);
+					for (int s = 0;  s < 3; s++) 
+						g.drawImage(Assets.mini_star, xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2 + 20 * s - DOUBLETILESIZE/3, yOffset + spaceY + i*DOUBLETILESIZE + DOUBLETILESIZE/2 + 10, null);
 				}
 				counter++;
 			}
@@ -120,7 +153,7 @@ public class LevelSelectorState extends State{
 		
 	}
 
-	private Level loadLevel(String path) {
+	private Level loadLevel(String path, int curr) {
 		String file = loadFileAsString(path);
 		String[] numbers = file.split("\\s+");
 		
@@ -156,13 +189,23 @@ public class LevelSelectorState extends State{
 			
 			String line;
 			while((line = br.readLine()) != null) {
+//				System.out.println("line"+  line);
 				builder.append(line + "\n");
 			}
 			br.close();
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		return builder.toString();
+	}
+	
+	public static void writeToPosition(String fileName, String data, long position) throws IOException {
+		RandomAccessFile writer = new RandomAccessFile(fileName, "rw");
+	    writer.seek(position);
+	    writer.writeBytes(data);
+	    System.out.println("done write");
+	    writer.close();
 	}
 
 

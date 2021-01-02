@@ -4,9 +4,11 @@ import java.awt.FontMetrics;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.io.IOException;
 
 import com.sophiego.gfx.Assets;
 import com.sophiego.input.KeyBoard;
+import com.sophiego.input.file.WriteIO;
 import com.sophiego.main.Window;
 import com.sophiego.states.LevelSelectorState;
 import com.sophiego.states.State;
@@ -33,7 +35,8 @@ public class Level {
 	private CoinPanel coinPanel;
 	private StepCounterPanel stepCounterPanel;
 	private ShortestPath shortestPath;
-	private boolean solved;
+	private WriteIO writeIO;
+	private boolean solved, played;
 	
 	private int plaStartRow, plaStartCol, plaEndRow, plaEndCol;
 	private LevelSelectorState levelSelectorState;
@@ -76,11 +79,15 @@ public class Level {
 			
 			if(ID == 1) 
 			{
-				solved = true;
+				played = true;
+				solved = false;
 //				System.out.println("this is ID" + ID + " and id = " + id);
 			}
-			else
+			else {
+				played = false;
 				solved = false;
+			}
+				
 //			System.out.println("else this is ID" + ID + " and id = " + id);
 			
 			xOffset = (Window.WIDTH - maze[0].length * TILESIZE)/2;
@@ -145,6 +152,8 @@ public class Level {
 		restart.update();
 		back.update();
 		
+//		State.currentLevel = id;
+		
 		for(int row = 0; row < maze.length; row++)
 			for(int col = 0; col < maze[row].length; col++)
 			{
@@ -162,12 +171,22 @@ public class Level {
 				}
 				if(maze[row][col] == 3 || maze[row][col] == 5) return;
 			}
-				
+		
+		
+		
+//		System.out.println("id " + id);
+		levelSelectorState.getLevels()[id].setPlayed(true);
 		levelSelectorState.getLevels()[id].setSolved(true);
 		if (levelSelectorState.getLevels()[id].isSolved()) {
-//			System.out.println("I'm here boy "+id);
-			State.currentLevel = id;
+			State.currentLevel = id + 1;
+//			try {
+//				levelSelectorState.writeToPosition("./res/levels/"+(State.currentLevel - 1) + ".txt", "1", 0);
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 			levelSelectorState.showResult();
+			
 		}
 	}
 
@@ -192,6 +211,7 @@ public class Level {
 	}
 	
 	public void render(Graphics g) {
+		g.drawImage(Assets.spaceBG, 0, 0, null);
 		restart.render(g);
 		back.render(g);
 		coinPanel.render(g);
@@ -220,7 +240,8 @@ public class Level {
 		g.drawImage(texture, xOffset + player_col*TILESIZE, yOffset + player_row*TILESIZE, null);
 	}
 	
-	
+	public boolean isPlayed() {return played;};
+	public void setPlayed(boolean bool) {played = bool;};
 	public boolean isSolved() {return solved;};
 	public void setSolved(boolean bool) {solved = bool;}; 
 

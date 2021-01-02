@@ -81,6 +81,7 @@ public class Window extends JFrame implements Runnable {
 		
 		if(State.currentState != null)
 			State.currentState.update();
+		
 	}
 	
 	private void draw(){
