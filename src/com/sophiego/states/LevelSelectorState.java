@@ -19,7 +19,6 @@ import com.sophiego.gfx.Text;
 import com.sophiego.input.MouseManager;
 import com.sophiego.main.Window;
 import com.sophiego.sophie.Level;
-import com.sophiego.sophie.SelectedLevel;
 import com.sophiego.ui.Button;
 import com.sophiego.ui.Click;
 import com.sophiego.states.State;
@@ -81,10 +80,7 @@ public class LevelSelectorState extends State{
 		for(int i = 0; i < 3; i++) {
 			for (int j = 0; j < 5; j++) {
 			
-//				System.out.println("counter");
-//				State.currentLevel = counter;
-				if (i == 0 && j == 0) State.currentArrLevel = levels[0];
-				else State.currentArrLevel = levels[counter - 1];
+				State.currentArrLevel = levels[counter - 1];
 
 				//space column and row
 				int spaceX = j * 45;
@@ -99,53 +95,36 @@ public class LevelSelectorState extends State{
 				//condition for hover, get Game Play state
 				if(bounds.contains(MouseManager.x, MouseManager.y)) {
 					if(MouseManager.left && State.currentArrLevel.isPlayed()) {
-						 System.out.println("playing");
-						
 						((GameState)window.getGameState()).setLevel(State.currentArrLevel);
 						State.currentState = window.getGameState();
 					}
 					if(State.currentArrLevel.isPlayed()) {
 						g.setColor(solvedColor.darker());
 						g.fillRoundRect(xOffset + j*DOUBLETILESIZE+spaceX, yOffset + i*DOUBLETILESIZE+spaceY , DOUBLETILESIZE, DOUBLETILESIZE, 25, 25);
-						 System.out.println("A");
 						Text.drawString(g, counter+"", xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2, yOffset + spaceY +i*DOUBLETILESIZE + DOUBLETILESIZE/2 - 6, true, Color.white.darker());
 					}	
 					else {
 						g.setColor(unsolvedColor.darker());
 						g.fillRoundRect(xOffset + j*DOUBLETILESIZE+spaceX, yOffset + i*DOUBLETILESIZE+spaceY , DOUBLETILESIZE, DOUBLETILESIZE, 25, 25);
-						System.out.println("B");
-//						if(State.currentArrLevel.isSolved()) {
-//							for (int s = 0;  s < 3; s++) 
-//								g.drawImage(Assets.mini_star_outline, xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2 + 20 * s - DOUBLETILESIZE/3, yOffset + spaceY + i*DOUBLETILESIZE + DOUBLETILESIZE/2 + 10, null);
-//						}
 						Text.drawString(g, "?", xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2, yOffset + spaceY +i*DOUBLETILESIZE + DOUBLETILESIZE/2 - 6, true, Color.white.darker());
 					}	
 				} else {
 					if(State.currentArrLevel.isPlayed()) {
 						g.setColor(solvedColor);
 						g.fillRoundRect(xOffset + j*DOUBLETILESIZE+spaceX, yOffset + i*DOUBLETILESIZE+spaceY , DOUBLETILESIZE, DOUBLETILESIZE, 25, 25);
-//						System.out.println("C");
-//						if(State.currentArrLevel.isSolved()) {
-//							for (int s = 0;  s < 3; s++) 
-//								g.drawImage(Assets.mini_star, xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2 + 20 * s - DOUBLETILESIZE/3, yOffset + spaceY + i*DOUBLETILESIZE + DOUBLETILESIZE/2 + 10, null);
-//						}
 						Text.drawString(g, counter+"", xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2, yOffset + spaceY + i*DOUBLETILESIZE + DOUBLETILESIZE/2 - 6, true, Color.white);
 					}
 					else {
 						g.setColor(unsolvedColor);
 						g.fillRoundRect(xOffset + j*DOUBLETILESIZE+spaceX, yOffset + i*DOUBLETILESIZE+spaceY , DOUBLETILESIZE, DOUBLETILESIZE, 25, 25);
-//						System.out.println("D");
-//						if(State.currentArrLevel.isSolved()) {
-//							for (int s = 0;  s < 3; s++) 
-//								g.drawImage(Assets.mini_star_outline, xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2 + 20 * s - DOUBLETILESIZE/3, yOffset + spaceY + i*DOUBLETILESIZE + DOUBLETILESIZE/2 + 10, null);
-//						}
 						Text.drawString(g, "?", xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2, yOffset + spaceY + i*DOUBLETILESIZE + DOUBLETILESIZE/2 - 6, true, Color.white);
 					}	
 				}
-				if(State.currentArrLevel.isSolved()) {
-					System.out.println("MASUK  GA TUH " + State.currentLevel);
-					for (int s = 0;  s < 3; s++) 
+				for (int s = 0;  s < 3; s++) {
+					if(State.currentArrLevel.isSolved()) 
 						g.drawImage(Assets.mini_star, xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2 + 20 * s - DOUBLETILESIZE/3, yOffset + spaceY + i*DOUBLETILESIZE + DOUBLETILESIZE/2 + 10, null);
+					else
+						g.drawImage(Assets.mini_star_outline, xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2 + 20 * s - DOUBLETILESIZE/3, yOffset + spaceY + i*DOUBLETILESIZE + DOUBLETILESIZE/2 + 10, null);
 				}
 				counter++;
 			}
@@ -189,7 +168,6 @@ public class LevelSelectorState extends State{
 			
 			String line;
 			while((line = br.readLine()) != null) {
-//				System.out.println("line"+  line);
 				builder.append(line + "\n");
 			}
 			br.close();
@@ -204,7 +182,6 @@ public class LevelSelectorState extends State{
 		RandomAccessFile writer = new RandomAccessFile(fileName, "rw");
 	    writer.seek(position);
 	    writer.writeBytes(data);
-	    System.out.println("done write");
 	    writer.close();
 	}
 

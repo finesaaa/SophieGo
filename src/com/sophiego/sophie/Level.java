@@ -8,7 +8,6 @@ import java.io.IOException;
 
 import com.sophiego.gfx.Assets;
 import com.sophiego.input.KeyBoard;
-import com.sophiego.input.file.WriteIO;
 import com.sophiego.main.Window;
 import com.sophiego.states.LevelSelectorState;
 import com.sophiego.states.State;
@@ -35,13 +34,12 @@ public class Level {
 	private CoinPanel coinPanel;
 	private StepCounterPanel stepCounterPanel;
 	private ShortestPath shortestPath;
-	private WriteIO writeIO;
 	private boolean solved, played;
 	
 	private int plaStartRow, plaStartCol, plaEndRow, plaEndCol;
 	private LevelSelectorState levelSelectorState;
 	
-	private static int ID = 0;
+	private static int ID = -1;
 	private int id;
 	private FontMetrics fm;
 	private String text;
@@ -77,19 +75,14 @@ public class Level {
 			shortestPath = new ShortestPath(this.maze, plaStartRow, plaStartCol, plaEndRow, plaEndCol);
 			target_num_step = shortestPath.minMoves();
 			
-			if(ID == 1) 
-			{
+			if(ID == 0) {
 				played = true;
-				solved = false;
-//				System.out.println("this is ID" + ID + " and id = " + id);
-			}
-			else {
-				played = false;
-				solved = false;
-			}
 				
-//			System.out.println("else this is ID" + ID + " and id = " + id);
+			} else {
+				played = false;
+			}
 			
+			solved = false;
 			xOffset = (Window.WIDTH - maze[0].length * TILESIZE)/2;
 			yOffset = (Window.HEIGHT - maze.length * TILESIZE)/2;
 			
@@ -152,8 +145,6 @@ public class Level {
 		restart.update();
 		back.update();
 		
-//		State.currentLevel = id;
-		
 		for(int row = 0; row < maze.length; row++)
 			for(int col = 0; col < maze[row].length; col++)
 			{
@@ -174,11 +165,13 @@ public class Level {
 		
 		
 		
-//		System.out.println("id " + id);
+		System.out.println("id " + id);
+	
 		levelSelectorState.getLevels()[id].setPlayed(true);
 		levelSelectorState.getLevels()[id].setSolved(true);
 		if (levelSelectorState.getLevels()[id].isSolved()) {
 			State.currentLevel = id + 1;
+			levelSelectorState.getLevels()[State.currentLevel].setPlayed(true);
 //			try {
 //				levelSelectorState.writeToPosition("./res/levels/"+(State.currentLevel - 1) + ".txt", "1", 0);
 //			} catch (IOException e) {
@@ -216,7 +209,7 @@ public class Level {
 		back.render(g);
 		coinPanel.render(g);
 		stepCounterPanel.render(g);
-//		System.out.print(State.currentLevel);
+
 		this.text = "Level " + (State.currentLevel);
 		g.setFont(Assets.fontLevel);
 		g.setColor(Assets.mColor);
