@@ -15,7 +15,6 @@ import com.sophiego.states.State;
 
 public class MenuState extends State {
 
-	private Button button;
 	private ArrayList<Button> buttons = new ArrayList<Button>();
 	
 	public MenuState(Window window) {
@@ -30,8 +29,9 @@ public class MenuState extends State {
 		buttons.add(new Button("EXIT", Window.WIDTH/2 + 100, Window.HEIGHT/2 + 125, new Click(){
 			@Override
 			public void onClick() {
-				int isCancel = JOptionPane.showConfirmDialog(null, "Are your sure?", "Exit Confirmation", JOptionPane.YES_NO_OPTION);
-				if (isCancel == 0)
+				int choose = JOptionPane.showConfirmDialog(null, 
+						"Do you really want to exit the app ?", "Confirm Close", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+				if (choose == JOptionPane.YES_OPTION)
 					System.exit(1);
 			}
 		}, Assets.font30,new Color(0xFF4646)));

@@ -37,6 +37,7 @@ public class Level {
 	private boolean solved, played;
 	
 	private int plaStartRow, plaStartCol, plaEndRow, plaEndCol;
+	private int statusLevel;
 	private LevelSelectorState levelSelectorState;
 	
 	private static int ID = -1;
@@ -44,16 +45,16 @@ public class Level {
 	private FontMetrics fm;
 	private String text;
 	
-	public Level(int[][] maze, int player_row, int player_col, LevelSelectorState levelSelectorState) {
+	public Level(int[][] maze, int id_level, int player_row, int player_col, int status_level, LevelSelectorState levelSelectorState) {
 		this.levelSelectorState = levelSelectorState;
 
+		this.statusLevel = status_level;
 		this.maze = maze;
 		this.num_coin = 0;
 		this.target_num_coin = 0;
 		this.num_step = 0;
+		this.id = id_level;
 		
-		ID ++;
-		id = ID;
 		copy = new int[maze.length][maze[0].length];
 		for (int row = 0; row < maze.length; row++) {
 			for (int col = 0; col < maze[row].length; col++)
@@ -75,14 +76,17 @@ public class Level {
 			shortestPath = new ShortestPath(this.maze, plaStartRow, plaStartCol, plaEndRow, plaEndCol);
 			target_num_step = shortestPath.minMoves();
 			
-			if(ID == 0) {
+			if(this.statusLevel == 1) {
+				solved = true;
 				played = true;
-				
-			} else {
-				played = false;
+			} else if (this.statusLevel == 0){
+				if (id_level == 0) played = true;
+				if (id_level > 0) 
+					if(levelSelectorState.getLevels()[id_level - 1].isSolved()) 
+						played = true;
+				solved = false;
 			}
 			
-			solved = false;
 			xOffset = (Window.WIDTH - maze[0].length * TILESIZE)/2;
 			yOffset = (Window.HEIGHT - maze.length * TILESIZE)/2;
 			
@@ -171,15 +175,18 @@ public class Level {
 		levelSelectorState.getLevels()[id].setSolved(true);
 		if (levelSelectorState.getLevels()[id].isSolved()) {
 			State.currentLevel = id + 1;
-			levelSelectorState.getLevels()[State.currentLevel].setPlayed(true);
-//			try {
-//				levelSelectorState.writeToPosition("./res/levels/"+(State.currentLevel - 1) + ".txt", "1", 0);
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-			levelSelectorState.showResult();
-			
+			if (id == (levelSelectorState.getNUMLEVEL() - 1)) {
+				levelSelectorState.showGameOver();
+			} else {
+				levelSelectorState.getLevels()[State.currentLevel].setPlayed(true);
+				try {
+					levelSelectorState.writeToPosition("./res/levels/"+(State.currentLevel - 1) + ".txt", "1", 0);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				levelSelectorState.showResult();
+			}
 		}
 	}
 
@@ -210,7 +217,7 @@ public class Level {
 		coinPanel.render(g);
 		stepCounterPanel.render(g);
 
-		this.text = "Level " + (State.currentLevel);
+		this.text = "Level " + (this.id + 1);
 		g.setFont(Assets.fontLevel);
 		g.setColor(Assets.mColor);
 		fm = g.getFontMetrics();
