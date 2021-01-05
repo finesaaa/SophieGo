@@ -60,8 +60,7 @@ public class LevelSelectorState extends State{
 					public void onClick() {
 						if(levels[State.currentLevel-1].isSolved()) showResult();
 						else {
-							((GameState)window.getGameState()).setLevel(State.currentArrLevel);
-							State.currentState = window.getGameState();
+							playThisLevel(State.currentLevel-1);
 						}						
 					}
 					
@@ -106,11 +105,12 @@ public class LevelSelectorState extends State{
 	public void render(Graphics g) {
 	
 		this.gL = g;
+		
 		//background image
 		g.drawImage(Assets.moon, -100, -50, null);
 		g.drawImage(Assets.uranus, 0, window.HEIGHT/2+20, null);
 		g.drawImage(Assets.jupiter, window.WIDTH/2+180, -100, null);
-		g.drawImage(Assets.saturn, window.WIDTH/2+150, window.HEIGHT/2, null);
+		g.drawImage(Assets.saturn2, window.WIDTH/2+150, window.HEIGHT/2, null);
 		
 		back.render(g);
 		reset.render(g);
@@ -122,60 +122,6 @@ public class LevelSelectorState extends State{
 		for(int i = 0; i < NUMLEVEL; i++) {
 			bLevels[i].render(g);
 		}
-//		for(int i = 0; i < 3; i++) {
-//			for (int j = 0; j < 5; j++) {
-//			
-//				State.currentArrLevel = levels[counter - 1];
-//
-//				//space column and row
-//				int spaceX = j * 45;
-//				int spaceY = i * 20;
-//				
-//				g.setFont(Assets.font22);
-////				g.fillRoundRect(xOffset + j * DOUBLETILESIZE + spaceX, yOffset + i * DOUBLETILESIZE + spaceY , DOUBLETILESIZE, DOUBLETILESIZE, 25, 25);
-//				
-//				//bounds for hover check
-//				Rectangle bounds = new Rectangle(xOffset + j*DOUBLETILESIZE + spaceX, yOffset + i * DOUBLETILESIZE + spaceY , DOUBLETILESIZE, DOUBLETILESIZE);
-//				
-//				
-//				//condition for hover, get Game Play state
-//				if(bounds.contains(MouseManager.x, MouseManager.y)) {
-//					if(MouseManager.left && State.currentArrLevel.isPlayed()) {
-//						((GameState)window.getGameState()).setLevel(State.currentArrLevel);
-//						State.currentState = window.getGameState();
-//					}
-//					if(State.currentArrLevel.isPlayed()) {
-//						g.setColor(solvedColor.darker());
-//						g.fillRoundRect(xOffset + j*DOUBLETILESIZE+spaceX, yOffset + i*DOUBLETILESIZE+spaceY , DOUBLETILESIZE, DOUBLETILESIZE, 25, 25);
-//						Text.drawString(g, counter+"", xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2, yOffset + spaceY +i*DOUBLETILESIZE + DOUBLETILESIZE/2 - 6, true, Color.white.darker());
-//					}	
-//					else {
-//						g.setColor(unsolvedColor.darker());
-//						g.fillRoundRect(xOffset + j*DOUBLETILESIZE+spaceX, yOffset + i*DOUBLETILESIZE+spaceY , DOUBLETILESIZE, DOUBLETILESIZE, 25, 25);
-//						Text.drawString(g, "?", xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2, yOffset + spaceY +i*DOUBLETILESIZE + DOUBLETILESIZE/2 - 6, true, Color.white.darker());
-//					}	
-//				} else {
-//					if(State.currentArrLevel.isPlayed()) {
-//						g.setColor(solvedColor);
-//						g.fillRoundRect(xOffset + j*DOUBLETILESIZE+spaceX, yOffset + i*DOUBLETILESIZE+spaceY , DOUBLETILESIZE, DOUBLETILESIZE, 25, 25);
-//						Text.drawString(g, counter+"", xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2, yOffset + spaceY + i*DOUBLETILESIZE + DOUBLETILESIZE/2 - 6, true, Color.white);
-//					}
-//					else {
-//						g.setColor(unsolvedColor);
-//						g.fillRoundRect(xOffset + j*DOUBLETILESIZE+spaceX, yOffset + i*DOUBLETILESIZE+spaceY , DOUBLETILESIZE, DOUBLETILESIZE, 25, 25);
-//						Text.drawString(g, "?", xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2, yOffset + spaceY + i*DOUBLETILESIZE + DOUBLETILESIZE/2 - 6, true, Color.white);
-//					}	
-//				}
-//				for (int s = 0;  s < 3; s++) {
-//					if(State.currentArrLevel.isSolved()) 
-//						g.drawImage(Assets.mini_star, xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2 + 20 * s - DOUBLETILESIZE/3, yOffset + spaceY + i*DOUBLETILESIZE + DOUBLETILESIZE/2 + 10, null);
-//					else
-//						g.drawImage(Assets.mini_star_outline, xOffset + j*DOUBLETILESIZE+spaceX + DOUBLETILESIZE/2 + 20 * s - DOUBLETILESIZE/3, yOffset + spaceY + i*DOUBLETILESIZE + DOUBLETILESIZE/2 + 10, null);
-//				}
-//				counter++;
-//			}
-//		}
-		
 	}
 
 	public int getNUMLEVEL() {
@@ -189,7 +135,6 @@ public class LevelSelectorState extends State{
 		int status_level = parseInt(numbers[0]);
 		int cols = parseInt(numbers[1]);
 		int rows = parseInt(numbers[2]);
-//		System.out.println(status_level + " " + cols +" " + rows + " ");
 	
 		int player_col = parseInt(numbers[3]);
 		int player_row = parseInt(numbers[4]);
@@ -243,7 +188,6 @@ public class LevelSelectorState extends State{
 			try {
 				writeToPosition("./res/levels/"+(id) + ".txt", "0", 0);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -268,6 +212,11 @@ public class LevelSelectorState extends State{
 	
 	public Level[] getLevels() {
 		return levels;
+	}
+
+	public void  playThisLevel(int id_level) {
+		((GameState)window.getGameState()).setLevel(levels[id_level]);
+		State.currentState = window.getGameState();
 	}
 
 }

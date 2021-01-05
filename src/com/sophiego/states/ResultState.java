@@ -10,7 +10,7 @@ import com.sophiego.ui.Click;
 
 public class ResultState extends State{
 	
-	private Button back, try_again;
+	private Button back, play_again;
 	private FontMetrics fm;
 	private String text;
 
@@ -26,12 +26,11 @@ public class ResultState extends State{
 			
 		}, Assets.font30, Assets.mColor);
 		
-		try_again = new Button("TRY AGAIN", Window.WIDTH/2 + 80, Window.HEIGHT/2 + 75, new Click() {
+		play_again = new Button("PLAY AGAIN", Window.WIDTH/2 + 80, Window.HEIGHT/2 + 75, new Click() {
 			
 			@Override
 			public void onClick() {
-				((GameState)window.getGameState()).setLevel(State.currentArrLevel);
-				State.currentState = window.getGameState();
+				State.currentArrLevel.tryAgainLevel(State.currentArrLevel.getId());
 			}
 			
 		}, Assets.font30, Assets.sColor);
@@ -39,15 +38,14 @@ public class ResultState extends State{
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
 		back.update();
-		try_again.update();
+		play_again.update();
 	}
 
 	@Override
 	public void render(Graphics g) {
 		back.render(g);
-		try_again.render(g);
+		play_again.render(g);
 		this.text = "You've passed level " + (State.currentLevel);
 		
 		g.setFont(Assets.fontLoading);

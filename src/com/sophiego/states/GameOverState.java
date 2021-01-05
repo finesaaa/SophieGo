@@ -30,15 +30,12 @@ public class GameOverState extends State{
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
 		try_again.update();
-//		try_again.update();
 	}
 
 	@Override
 	public void render(Graphics g) {
 		try_again.render(g);
-//		try_again.render(g);
 		this.text = "GAME OVER";
 		
 		g.setFont(Assets.fontLoading);

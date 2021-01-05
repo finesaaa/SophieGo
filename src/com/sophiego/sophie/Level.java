@@ -9,6 +9,7 @@ import java.io.IOException;
 import com.sophiego.gfx.Assets;
 import com.sophiego.input.KeyBoard;
 import com.sophiego.main.Window;
+import com.sophiego.states.GameState;
 import com.sophiego.states.LevelSelectorState;
 import com.sophiego.states.State;
 import com.sophiego.ui.*;
@@ -161,15 +162,11 @@ public class Level {
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-//					levelSelectorState.showGameOver();
+					levelSelectorState.showGameOver();
 					reset();
 				}
 				if(maze[row][col] == 3 || maze[row][col] == 5) return;
 			}
-		
-		
-		
-		System.out.println("id " + id);
 	
 		levelSelectorState.getLevels()[id].setPlayed(true);
 		levelSelectorState.getLevels()[id].setSolved(true);
@@ -211,7 +208,6 @@ public class Level {
 	}
 	
 	public void render(Graphics g) {
-		g.drawImage(Assets.spaceBG, 0, 0, null);
 		restart.render(g);
 		back.render(g);
 		coinPanel.render(g);
@@ -225,24 +221,32 @@ public class Level {
 		
 		for (int row = 0; row < maze.length; row++) {
 			for (int col = 0;  col < maze[row].length; col++) {
-				g.drawImage(Assets.floor, xOffset + col*TILESIZE, yOffset + row*TILESIZE, null);
-				if(maze[row][col] == 1)
-					g.drawImage(Assets.wall, xOffset + col*TILESIZE, yOffset + row*TILESIZE, null);
-				if(maze[row][col] == 3)
-					g.drawImage(Assets.spot, xOffset + col*TILESIZE, yOffset + row*TILESIZE, null);
-				if(maze[row][col] == 4)
-					g.drawImage(Assets.boxOn, xOffset + col*TILESIZE, yOffset + row*TILESIZE, null);
-				if(maze[row][col] == 5)
-					g.drawImage(Assets.flag, xOffset + col*TILESIZE, yOffset + row*TILESIZE, null);
+				drawMapAsset(g, Assets.floor, col, row);
+				if(maze[row][col] == 1) drawMapAsset(g, Assets.wall, col, row);
+				if(maze[row][col] == 3) drawMapAsset(g, Assets.coin, col, row);
+				if(maze[row][col] == 4) drawMapAsset(g, Assets.boxOn, col, row);
+				if(maze[row][col] == 5) drawMapAsset(g, Assets.flag, col, row);
 			}
 		}
 	
 		g.drawImage(texture, xOffset + player_col*TILESIZE, yOffset + player_row*TILESIZE, null);
 	}
 	
+	public void drawMapAsset(Graphics g, Image img, int col, int row) {
+		g.drawImage(img, xOffset + col*TILESIZE, yOffset + row*TILESIZE, null);
+	}
+
+	public int getId() {
+		return id;
+	}
+
 	public boolean isPlayed() {return played;};
 	public void setPlayed(boolean bool) {played = bool;};
 	public boolean isSolved() {return solved;};
 	public void setSolved(boolean bool) {solved = bool;}; 
+	public void tryAgainLevel(int id_level) {
+		reset();
+		levelSelectorState.playThisLevel(id_level);
+	}
 
 }

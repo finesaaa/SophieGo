@@ -48,10 +48,10 @@ public class MenuState extends State {
 		g.drawImage(Assets.logo, Window.WIDTH/2 - Assets.LOGOSIZE/2, Window.HEIGHT/2 - 240, null);
 		
 		g.drawImage(Assets.ufo, -100 , Window.HEIGHT/2 - 30, null);
-		g.drawImage(Assets.planet1, Window.WIDTH/2 + 180 , -100, null);
+		g.drawImage(Assets.saturn, Window.WIDTH/2 + 180 , -100, null);
 		
 		g.setFont(Assets.fontTitle);
-		Text.drawString(g, "Sophie Go", Window.WIDTH/2, Window.HEIGHT/2 + 35, true, new Color (0, 45, 42));
+		Text.drawString(g, "Shopie Go", Window.WIDTH/2, Window.HEIGHT/2 + 35, true, new Color (0, 45, 42));
 		for(int i = 0; i < buttons.size(); i++)
 			buttons.get(i).render(g);
 	}

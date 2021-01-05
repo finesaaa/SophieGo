@@ -48,7 +48,7 @@ public class Window extends JFrame implements Runnable {
 	private MouseManager mouseManager;
 
 	public Window() {
-		setTitle("Sophie Go");
+		setTitle("Shopie Go");
 		setSize(WIDTH, HEIGHT);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
@@ -101,12 +101,10 @@ public class Window extends JFrame implements Runnable {
 		
 		for(int i = 0; i < Window.WIDTH/Level.TILESIZE + 1; i++)
 			for(int j = 0; j < Window.HEIGHT/Level.TILESIZE + 1; j++)
-				g.drawImage(Assets.floor2, i*Level.TILESIZE, j*Level.TILESIZE, null);
+				g.drawImage(Assets.baseBG, i*Level.TILESIZE, j*Level.TILESIZE, null);
 		
 		if(State.currentState != null)
 			State.currentState.render(g);
-		
-//		g.drawString(""+AVERAGEFPS, 10, 20);
 		
 		g.dispose();
 		bs.show();
@@ -136,32 +134,25 @@ public class Window extends JFrame implements Runnable {
 		
 		init();
 		
-		while(running)
-		{
+		while(running) {
 			now = System.nanoTime();
 			delta += (now - lastTime)/TARGETTIME;
 			time += (now - lastTime);
 			lastTime = now;
 			
-			if(delta >= 1)
-			{		
+			if(delta >= 1) {		
 				update();
 				draw();
 				delta --;
 				frames ++;
 			}
-			if(time >= 1000000000)
-			{
+			if(time >= 1000000000) {
 				frames = 0;
 				time = 0;
 			}
 		}
 		
 		stop();
-	}
-	
-	public CongratsState getCongratsState() {
-		return congratsState;
 	}
 
 	private void start(){
@@ -196,5 +187,8 @@ public class Window extends JFrame implements Runnable {
 	public State getGameOverState() {
 		return gameOverState;
 	}
-
+	
+	public State getCongratsState() {
+		return congratsState;
+	}
 }

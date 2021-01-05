@@ -22,11 +22,13 @@ public class Button {
 	private Color color;
 	
 	public Button(String text, int x, int y, Click click, Font font, Color color) {
-		this.text = text;
 		this.x = x;
 		this.y = y;
+		
 		this.click = click;
 		hovering = false;
+		
+		this.text = text;
 		this.font = font;
 		this.color = color;
 	}
@@ -45,13 +47,10 @@ public class Button {
 		g.setFont(font);
 		fm = g.getFontMetrics();
 		if(hovering) {
-			Color darkColor = color.darker();
-			g.setColor(darkColor);
+			g.setColor(color.darker());
 			g.fillRoundRect(x - fm.stringWidth(text)/2 - 20, y - fm.getHeight()/2 - 3, fm.stringWidth(text) + 40, fm.getHeight() + 6, 50, 50);
 			Text.drawString(g, text, x, y, true, new Color(0xCCCCCC));
-		}	
-		else
-		{
+		} else {
 			g.setColor(color);
 			g.fillRoundRect(x - fm.stringWidth(text)/2 - 20, y - fm.getHeight()/2 - 3, fm.stringWidth(text) + 40, fm.getHeight() + 6, 50, 50);
 			Text.drawString(g, text, x, y, true, Color.WHITE);
