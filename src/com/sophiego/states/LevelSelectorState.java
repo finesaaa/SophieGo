@@ -58,7 +58,9 @@ public class LevelSelectorState extends State{
 						yOffset + i * DOUBLETILESIZE + spaceY + DOUBLETILESIZE/2, new Click() {
 					@Override
 					public void onClick() {
-						if(levels[State.currentLevel-1].isSolved()) showResult();
+						if(levels[State.currentLevel-1].isSolved()) {
+							showResult();
+						}
 						else {
 							playThisLevel(State.currentLevel-1);
 						}						

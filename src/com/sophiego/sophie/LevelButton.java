@@ -78,5 +78,14 @@ public class LevelButton {
 		}
 		
 	}
+	
+	public void delayState() {
+		try {
+			Thread.sleep(State.DELAY);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
 
 }

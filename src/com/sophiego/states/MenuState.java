@@ -55,5 +55,4 @@ public class MenuState extends State {
 		for(int i = 0; i < buttons.size(); i++)
 			buttons.get(i).render(g);
 	}
-
 }

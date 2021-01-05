@@ -9,6 +9,7 @@ public abstract class State {
 
 	public static State currentState = null;
 	public static int currentLevel = 1;
+	public static int DELAY = 500;
 	public static Level currentArrLevel;
 	protected Window window;
 	

@@ -100,6 +100,11 @@ public class Level {
 			back = new Button("BACK", Window.WIDTH - 100, Window.HEIGHT/2, new Click() {
 				@Override
 				public void onClick() {
+					try {
+						Thread.sleep(600);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 					State.currentState = levelSelectorState;
 				}
 			}, Assets.font30,new Color(0x02A79F));
@@ -172,16 +177,16 @@ public class Level {
 		levelSelectorState.getLevels()[id].setSolved(true);
 		if (levelSelectorState.getLevels()[id].isSolved()) {
 			State.currentLevel = id + 1;
+			try {
+				levelSelectorState.writeToPosition("./res/levels/"+(State.currentLevel - 1) + ".txt", "1", 0);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			if (id == (levelSelectorState.getNUMLEVEL() - 1)) {
 				levelSelectorState.showGameOver();
 			} else {
 				levelSelectorState.getLevels()[State.currentLevel].setPlayed(true);
-				try {
-					levelSelectorState.writeToPosition("./res/levels/"+(State.currentLevel - 1) + ".txt", "1", 0);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 				levelSelectorState.showResult();
 			}
 		}

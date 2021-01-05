@@ -55,5 +55,4 @@ public class ResultState extends State{
 		for (int i = 0;  i < 3; i++) 
 			g.drawImage(Assets.star, Window.WIDTH/2 - 100 + i*64, Window.HEIGHT/2 - 45, null);
 	}
-
 }

@@ -9,6 +9,7 @@ import java.awt.Rectangle;
 import com.sophiego.gfx.Assets;
 import com.sophiego.gfx.Text;
 import com.sophiego.input.MouseManager;
+import com.sophiego.states.State;
 
 public class Button {
 
@@ -36,8 +37,10 @@ public class Button {
 	public void update() {
 		if(bounds != null && bounds.contains(MouseManager.x, MouseManager.y)){
 			hovering = true;
-			if (MouseManager.left)
+			if (MouseManager.left) {
+				delayState();
 				click.onClick();
+			}	
 		} else {
 			hovering = false;
 		}
@@ -55,6 +58,14 @@ public class Button {
 			g.fillRoundRect(x - fm.stringWidth(text)/2 - 20, y - fm.getHeight()/2 - 3, fm.stringWidth(text) + 40, fm.getHeight() + 6, 50, 50);
 			Text.drawString(g, text, x, y, true, Color.WHITE);
 		}
-		bounds = new Rectangle(x - fm.stringWidth(text)/2, y - fm.getHeight()/2, fm.stringWidth(text), fm.getHeight());
+		bounds = new Rectangle(x - fm.stringWidth(text)/2 - 20, y - fm.getHeight()/2 - 3, fm.stringWidth(text) + 40, fm.getHeight() + 6);
+	}
+	
+	public void delayState() {
+		try {
+			Thread.sleep(State.DELAY);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 }
