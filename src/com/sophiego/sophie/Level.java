@@ -184,7 +184,7 @@ public class Level {
 				e.printStackTrace();
 			}
 			if (id == (levelSelectorState.getNUMLEVEL() - 1)) {
-				levelSelectorState.showGameOver();
+				levelSelectorState.showCongratsState();
 			} else {
 				levelSelectorState.getLevels()[State.currentLevel].setPlayed(true);
 				levelSelectorState.showResult();

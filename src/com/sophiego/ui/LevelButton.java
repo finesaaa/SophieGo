@@ -1,4 +1,4 @@
-package com.sophiego.sophie;
+package com.sophiego.ui;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -11,7 +11,6 @@ import com.sophiego.gfx.Text;
 import com.sophiego.input.MouseManager;
 import com.sophiego.states.LevelSelectorState;
 import com.sophiego.states.State;
-import com.sophiego.ui.Click;
 
 public class LevelButton {
 

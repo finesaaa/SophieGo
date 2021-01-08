@@ -23,9 +23,9 @@ import com.sophiego.gfx.Text;
 import com.sophiego.input.MouseManager;
 import com.sophiego.main.Window;
 import com.sophiego.sophie.Level;
-import com.sophiego.sophie.LevelButton;
 import com.sophiego.ui.Button;
 import com.sophiego.ui.Click;
+import com.sophiego.ui.LevelButton;
 import com.sophiego.states.State;
 
 public class LevelSelectorState extends State{
@@ -59,7 +59,8 @@ public class LevelSelectorState extends State{
 					@Override
 					public void onClick() {
 						if(levels[State.currentLevel-1].isSolved()) {
-							showResult();
+							if(State.currentLevel == NUMLEVEL) showCongratsState();
+							else showResult();
 						}
 						else {
 							playThisLevel(State.currentLevel-1);

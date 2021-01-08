@@ -23,7 +23,7 @@ public class Assets {
 	public static Image logo, flag, star_outline, star, mini_star, mini_star_outline, ufo;
 	public static Image floor, wall, boxOn, boxOff, coin;
 	public static Image moon, uranus, jupiter, saturn, saturn2;
-	public static Image splashBG, baseBG;
+	public static Image splashBG, baseBG, congratsBG;
 	
 	public static Font square48;
 	public static Font font48;
@@ -48,6 +48,9 @@ public class Assets {
 		
 		//main background
 		baseBG = loadImage("/blocks/bg_base.png").getScaledInstance(TILESIZE, TILESIZE, BufferedImage.SCALE_DEFAULT);
+		
+		//congrats background
+		congratsBG = loadImage("/blocks/bg_congrats.png").getScaledInstance(Window.WIDTH, Window.HEIGHT + 10, BufferedImage.SCALE_DEFAULT);
 		
 		//map
 		floor = loadImage("/blocks/ground.png").getScaledInstance(TILESIZE, TILESIZE, BufferedImage.SCALE_DEFAULT);
