@@ -29,9 +29,10 @@ public class Assets {
 	public static Font font48;
 	public static Font font30;
 	public static Font font22;
+	public static Font font20;
 	public static Font font36;
 	public static Font fontTitle;
-	public static Font fontLoading, fontLevel;
+	public static Font fontLoading, fontLevel, fontOver;
 	
 	public static void init()
 	{
@@ -76,11 +77,13 @@ public class Assets {
 		square48 = loadFont("res/fonts/square.ttf", 48);
 		font48 = loadFont("res/fonts/Poppins-SemiBold.ttf", 48);
 		font22 = loadFont("res/fonts/Poppins-SemiBold.ttf", 22);
+		font20 = loadFont("res/fonts/Poppins-SemiBold.ttf", 20);
 		font30 = loadFont("res/fonts/Poppins-SemiBold.ttf", 30);
 		font36 = loadFont("res/fonts/Poppins-SemiBold.ttf", 36);
 		fontTitle = loadFont("res/fonts/PoetsenOne.ttf", 56);
 		fontLoading = loadFont("res/fonts/square.ttf", 32);
 		fontLevel = loadFont("res/fonts/square.ttf", 30);
+		fontOver = loadFont("res/fonts/square.ttf", 40);
 	}
 
 	public static void setStar(Image star) {

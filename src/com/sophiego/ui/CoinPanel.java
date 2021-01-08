@@ -9,6 +9,7 @@ import java.awt.Rectangle;
 import com.sophiego.gfx.Assets;
 import com.sophiego.gfx.Text;
 import com.sophiego.input.MouseManager;
+import com.sophiego.main.Window;
 
 public class CoinPanel {
 
@@ -32,11 +33,23 @@ public class CoinPanel {
 	}
 	
 	public void render(Graphics g){
+		int radius = 13;
+		int space =8;
 		g.setFont(font);
 //		fm = g.getFontMetrics();
 		g.setColor(Assets.mColor);
 //		g.fillRoundRect(0, 0, fm.stringWidth(text) + 40, fm.getHeight() + 6, 50, 50);
-		Text.drawString(g, (text + statusCoin + "/" + targetCoin).toUpperCase() , x, y, true, Assets.mColor);
+		Text.drawString(g, (text).toUpperCase() , x, y, true, Assets.mColor);
+		//draw coin
+		for (int i=0; i<targetCoin; i++) {
+			g.setColor(Color.LIGHT_GRAY);
+			g.fillOval(130 + i*space+radius*2*i, 50-radius,  radius*2, radius*2);
+		}
+		for (int i=0; i<statusCoin; i++) {
+			g.setColor(Color.yellow);
+			g.fillOval( 130 + i*space+radius*2*i, 50-radius,  radius*2, radius*2);
+//			g.drawImage(Assets.coin, 130 + i*space+radius*2*i, 50-radius,  radius*2, radius*2,null);
+		}
 	}
 
 }

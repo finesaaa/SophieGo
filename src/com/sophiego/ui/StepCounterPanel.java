@@ -1,10 +1,14 @@
 package com.sophiego.ui;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
+import javax.swing.JProgressBar;
+
 import com.sophiego.gfx.Assets;
 import com.sophiego.gfx.Text;
+import com.sophiego.main.Window;
 
 public class StepCounterPanel {
 	
@@ -28,10 +32,24 @@ public class StepCounterPanel {
 	}
 	
 	public void render(Graphics g){
+		int width = 180;
+		int height = 32;
+		double step = (numStep*180)/(double) targetNumStep;
+		
+		//background progress
+		g.setColor(Color.LIGHT_GRAY);
+//		g.fillRoundRect(Window.WIDTH/2+180, 35, width, height, 25, 25);
+		g.fillRect(Window.WIDTH/2+180, 35, width, height);
+		
+		//actual profress
+		g.setColor(Color.yellow);
+//		g.fillRoundRect(Window.WIDTH/2+180, 35, (int) step, height, 25, 25);
+		g.fillRect(Window.WIDTH/2+180, 35, 180 - (int) step, height);
+		
+		//set font
 		g.setFont(font);
-//		fm = g.getFontMetrics();
 		g.setColor(Assets.mColor);
-//		g.fillRoundRect(0, 0, fm.stringWidth(text) + 40, fm.getHeight() + 6, 50, 50);
 		Text.drawString(g, (text + numStep + " / " + targetNumStep).toUpperCase(), x, y, true, Assets.mColor);
+	
 	}
 }
