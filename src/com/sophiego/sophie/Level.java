@@ -1,7 +1,6 @@
 package com.sophiego.sophie;
 
 import java.awt.FontMetrics;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.IOException;
@@ -9,7 +8,6 @@ import java.io.IOException;
 import com.sophiego.gfx.Assets;
 import com.sophiego.input.KeyBoard;
 import com.sophiego.main.Window;
-import com.sophiego.states.GameState;
 import com.sophiego.states.LevelSelectorState;
 import com.sophiego.states.State;
 import com.sophiego.ui.*;
@@ -41,7 +39,6 @@ public class Level {
 	private int statusLevel;
 	private LevelSelectorState levelSelectorState;
 	
-	private static int ID = -1;
 	private int id;
 	private FontMetrics fm;
 	private String text;
@@ -92,12 +89,12 @@ public class Level {
 			yOffset = (Window.HEIGHT - maze.length * TILESIZE)/2;
 			
 			texture = Assets.PlayerFront;	
-			restart = new Button("RESTART", 100, Window.HEIGHT/2, new Click(){
+			restart = new Button("Restart", 100, Window.HEIGHT/2, new Click(){
 				@Override
 				public void onClick() {
 					reset();
-				}}, Assets.font30,new Color(0x02A79F));
-			back = new Button("BACK", Window.WIDTH - 100, Window.HEIGHT/2, new Click() {
+				}}, Assets.font22, Assets.sColor);
+			back = new Button("Back", Window.WIDTH - 100, Window.HEIGHT/2, new Click() {
 				@Override
 				public void onClick() {
 					try {
@@ -107,7 +104,7 @@ public class Level {
 					}
 					State.currentState = levelSelectorState;
 				}
-			}, Assets.font30,new Color(0x02A79F));
+			}, Assets.font22, Assets.bColor);
 			coinPanel = new CoinPanel("Coin: ", num_coin, target_num_coin, 80, 50, Assets.font30);
 			stepCounterPanel = new StepCounterPanel("Energy: ", num_step, target_num_step, Window.WIDTH - 130, 52, Assets.font20);
 			time = 0;

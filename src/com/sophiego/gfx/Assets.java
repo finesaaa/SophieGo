@@ -15,21 +15,22 @@ import com.sophiego.sophie.Level;
 
 public class Assets {
 	public static final int TILESIZE = 48;
-	public static final int LOGOSIZE = 240;
+	public static final int LOGOSIZE = 200;
 	public static final Color mColor = new Color(2, 167, 159);
 	public static final Color sColor = new Color(255, 70, 70);
+	public static final Color bColor = new Color(0xFFDA77);
 	
 	public static Image playerLeft, playerBack, playerRight, PlayerFront, playerDead;
 	public static Image logo, flag, star_outline, star, mini_star, mini_star_outline, ufo;
 	public static Image floor, wall, boxOn, boxOff, coin;
 	public static Image moon, uranus, jupiter, saturn, saturn2;
-	public static Image splashBG, baseBG, congratsBG;
+	public static Image splashBG, baseBG, congratsBG, gameOverBG;
 	
 	public static Font square48;
 	public static Font font48;
 	public static Font font30;
 	public static Font font22;
-	public static Font font20;
+	public static Font font20, font26;
 	public static Font font36;
 	public static Font fontTitle;
 	public static Font fontLoading, fontLevel, fontOver;
@@ -51,6 +52,9 @@ public class Assets {
 		
 		//congrats background
 		congratsBG = loadImage("/blocks/bg_congrats.png").getScaledInstance(Window.WIDTH, Window.HEIGHT + 10, BufferedImage.SCALE_DEFAULT);
+		
+		//game over background
+		gameOverBG = loadImage("/blocks/bg_gameover.png").getScaledInstance(Window.WIDTH, Window.HEIGHT + 10, BufferedImage.SCALE_DEFAULT);
 		
 		//map
 		floor = loadImage("/blocks/ground.png").getScaledInstance(TILESIZE, TILESIZE, BufferedImage.SCALE_DEFAULT);
@@ -81,12 +85,13 @@ public class Assets {
 		font48 = loadFont("res/fonts/Poppins-SemiBold.ttf", 48);
 		font22 = loadFont("res/fonts/Poppins-SemiBold.ttf", 22);
 		font20 = loadFont("res/fonts/Poppins-SemiBold.ttf", 20);
+		font26 = loadFont("res/fonts/Poppins-SemiBold.ttf", 24);
 		font30 = loadFont("res/fonts/Poppins-SemiBold.ttf", 30);
 		font36 = loadFont("res/fonts/Poppins-SemiBold.ttf", 36);
 		fontTitle = loadFont("res/fonts/PoetsenOne.ttf", 56);
 		fontLoading = loadFont("res/fonts/square.ttf", 32);
 		fontLevel = loadFont("res/fonts/square.ttf", 30);
-		fontOver = loadFont("res/fonts/square.ttf", 40);
+		fontOver = loadFont("res/fonts/square.ttf", 36);
 	}
 
 	public static void setStar(Image star) {

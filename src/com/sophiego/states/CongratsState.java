@@ -18,7 +18,7 @@ public class CongratsState extends State{
 	public CongratsState(Window window) {
 		super(window);
 		
-		back = new Button("RETURN", Window.WIDTH/4 - 50, Window.HEIGHT/2 - 50, new Click() {
+		back = new Button("Return", Window.WIDTH/4 - 50, Window.HEIGHT/2 - 50, new Click() {
 			
 			@Override
 			public void onClick() {

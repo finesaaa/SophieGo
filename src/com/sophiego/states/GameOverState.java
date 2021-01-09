@@ -1,6 +1,5 @@
 package com.sophiego.states;
 
-import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 
@@ -18,7 +17,7 @@ public class GameOverState extends State{
 	public GameOverState(Window window) {
 		super(window);
 		
-		try_again = new Button("RETRY", Window.WIDTH/2 + 120, Window.HEIGHT/2 + 75, new Click() {
+		try_again = new Button("Play Again", Window.WIDTH/2 + 200, Window.HEIGHT/2 - 10, new Click() {
 			
 			@Override
 			public void onClick() {
@@ -26,9 +25,9 @@ public class GameOverState extends State{
 				State.currentState = window.getGameState();
 			}
 			
-		}, Assets.font30, Assets.mColor);
+		}, Assets.font26, Assets.mColor);
 		
-		back = new Button("RETURN", Window.WIDTH/2 - 120, Window.HEIGHT/2 + 75, new Click() {
+		back = new Button("Return Home", Window.WIDTH/2 + 200, Window.HEIGHT/2 + 75, new Click() {
 			
 			@Override
 			public void onClick() {
@@ -36,7 +35,7 @@ public class GameOverState extends State{
 				State.currentState = window.getLevelSelectorState();
 			}
 			
-		}, Assets.font30, new Color(0xFFDA77));
+		}, Assets.font26, Assets.bColor);
 	}
 
 	@Override
@@ -47,16 +46,17 @@ public class GameOverState extends State{
 
 	@Override
 	public void render(Graphics g) {
+		g.drawImage(Assets.gameOverBG, 0 , -40, null);
 		try_again.render(g);
 		back.render(g);
-		this.text = "GAME OVER";
+		this.text = "SHOPIE RUN";
 		
 		//setting text
 		g.setFont(Assets.fontOver);
 		g.setColor(Assets.mColor);
 		fm = g.getFontMetrics();
-		g.drawString(text, Window.WIDTH/2 - fm.stringWidth(text)/2, Window.HEIGHT/2 - 150);
-
+		g.drawString(text, Window.WIDTH/2 - fm.stringWidth(text)/2 + 200, Window.HEIGHT/2 - 200);
+		g.drawString("OUT OF ENERGY!", Window.WIDTH/2 - fm.stringWidth(text)/2 + 150, Window.HEIGHT/2 - 120);
 	}
 
 }

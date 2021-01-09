@@ -6,7 +6,6 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-import com.sophiego.gfx.Assets;
 import com.sophiego.gfx.Text;
 import com.sophiego.input.MouseManager;
 import com.sophiego.states.State;
@@ -51,14 +50,14 @@ public class Button {
 		fm = g.getFontMetrics();
 		if(hovering) {
 			g.setColor(color.darker());
-			g.fillRoundRect(x - fm.stringWidth(text)/2 - 20, y - fm.getHeight()/2 - 3, fm.stringWidth(text) + 40, fm.getHeight() + 6, 50, 50);
+			g.fillRoundRect(x - fm.stringWidth(text)/2 - 20 - 20, y - fm.getHeight()/2 - 3, fm.stringWidth(text) + 40 + 40, fm.getHeight() + 6, 50, 50);
 			Text.drawString(g, text, x, y, true, new Color(0xCCCCCC));
 		} else {
 			g.setColor(color);
-			g.fillRoundRect(x - fm.stringWidth(text)/2 - 20, y - fm.getHeight()/2 - 3, fm.stringWidth(text) + 40, fm.getHeight() + 6, 50, 50);
+			g.fillRoundRect(x - fm.stringWidth(text)/2 - 20 - 20, y - fm.getHeight()/2 - 3, fm.stringWidth(text) + 40 + 40, fm.getHeight() + 6, 50, 50);
 			Text.drawString(g, text, x, y, true, Color.WHITE);
 		}
-		bounds = new Rectangle(x - fm.stringWidth(text)/2 - 20, y - fm.getHeight()/2 - 3, fm.stringWidth(text) + 40, fm.getHeight() + 6);
+		bounds = new Rectangle(x - fm.stringWidth(text)/2 - 20 - 20, y - fm.getHeight()/2 - 3, fm.stringWidth(text) + 40 + 40, fm.getHeight() + 6);
 	}
 	
 	public void delayState() {

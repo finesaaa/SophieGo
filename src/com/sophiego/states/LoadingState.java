@@ -1,16 +1,14 @@
 package com.sophiego.states;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 import com.sophiego.gfx.Assets;
 import com.sophiego.gfx.Text;
 import com.sophiego.main.Window;
-import com.sophiego.states.State;
 
 public class LoadingState extends State {
 
-	private final String NAME = "HELLO  THERE . . . ";
+	private final String NAME = "LONELY DAY IN THE MOON . . . ";
 	private String text = "";
 	private int index = 0;
 	private long time, lastTime;

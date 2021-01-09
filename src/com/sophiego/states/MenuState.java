@@ -11,7 +11,6 @@ import com.sophiego.gfx.Text;
 import com.sophiego.main.Window;
 import com.sophiego.ui.Button;
 import com.sophiego.ui.Click;
-import com.sophiego.states.State;
 
 public class MenuState extends State {
 
@@ -19,14 +18,14 @@ public class MenuState extends State {
 	
 	public MenuState(Window window) {
 		super(window);
-		buttons.add(new Button("PLAY", Window.WIDTH/2 - 100, Window.HEIGHT/2 + 125 , new Click(){
+		buttons.add(new Button("Play", Window.WIDTH/2 - 100, Window.HEIGHT/2 + 125 , new Click(){
 			@Override
 			public void onClick() {
 				State.currentState = window.getLevelSelectorState();
 			}
-		}, Assets.font30,new Color(0x02A79F)));
+		}, Assets.font30,Assets.mColor));
 
-		buttons.add(new Button("EXIT", Window.WIDTH/2 + 100, Window.HEIGHT/2 + 125, new Click(){
+		buttons.add(new Button("Exit", Window.WIDTH/2 + 100, Window.HEIGHT/2 + 125, new Click(){
 			@Override
 			public void onClick() {
 				int choose = JOptionPane.showConfirmDialog(null, 
@@ -34,7 +33,7 @@ public class MenuState extends State {
 				if (choose == JOptionPane.YES_OPTION)
 					System.exit(1);
 			}
-		}, Assets.font30,new Color(0xFF4646)));
+		}, Assets.font30,Assets.sColor));
 	}
 
 	@Override
@@ -51,7 +50,7 @@ public class MenuState extends State {
 		g.drawImage(Assets.saturn, Window.WIDTH/2 + 180 , -100, null);
 		
 		g.setFont(Assets.fontTitle);
-		Text.drawString(g, "Shopie Go", Window.WIDTH/2, Window.HEIGHT/2 + 35, true, new Color (0, 45, 42));
+		Text.drawString(g, "Shopie Go", Window.WIDTH/2, Window.HEIGHT/2 + 20, true, new Color (0, 45, 42));
 		for(int i = 0; i < buttons.size(); i++)
 			buttons.get(i).render(g);
 	}

@@ -2,14 +2,11 @@ package com.sophiego.ui;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 
 import com.sophiego.gfx.Assets;
 import com.sophiego.gfx.Text;
-import com.sophiego.input.MouseManager;
-import com.sophiego.main.Window;
+
 
 public class CoinPanel {
 
@@ -40,15 +37,14 @@ public class CoinPanel {
 		g.setColor(Assets.mColor);
 //		g.fillRoundRect(0, 0, fm.stringWidth(text) + 40, fm.getHeight() + 6, 50, 50);
 		Text.drawString(g, (text).toUpperCase() , x, y, true, Assets.mColor);
-		//draw coin
+		//draw background coin
 		for (int i=0; i<targetCoin; i++) {
 			g.setColor(Color.LIGHT_GRAY);
-			g.fillOval(130 + i*space+radius*2*i, 50-radius,  radius*2, radius*2);
+			g.fillOval(130 + i*space+radius*2*i , 50-radius ,  radius*2, radius*2);
 		}
 		for (int i=0; i<statusCoin; i++) {
-			g.setColor(Color.yellow);
+			g.setColor(new Color(0xFFC107) );
 			g.fillOval( 130 + i*space+radius*2*i, 50-radius,  radius*2, radius*2);
-//			g.drawImage(Assets.coin, 130 + i*space+radius*2*i, 50-radius,  radius*2, radius*2,null);
 		}
 	}
 

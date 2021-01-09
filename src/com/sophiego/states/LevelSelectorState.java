@@ -2,31 +2,21 @@ package com.sophiego.states;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.RandomAccessFile;
-import java.util.ArrayList;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import com.sophiego.gfx.Assets;
 import com.sophiego.gfx.Text;
-import com.sophiego.input.MouseManager;
 import com.sophiego.main.Window;
 import com.sophiego.sophie.Level;
 import com.sophiego.ui.Button;
 import com.sophiego.ui.Click;
 import com.sophiego.ui.LevelButton;
-import com.sophiego.states.State;
 
 public class LevelSelectorState extends State{
 	
@@ -72,16 +62,16 @@ public class LevelSelectorState extends State{
 			}
 		}
 
-		back = new Button("BACK", Window.WIDTH/2, Window.HEIGHT - 100, new Click() {
+		back = new Button("Back", Window.WIDTH/2, Window.HEIGHT - 100, new Click() {
 			
 			@Override
 			public void onClick() {
 				State.currentState = window.getMenuState();
 			}
 			
-		}, Assets.font30,new Color(0xFFDA77));
+		}, Assets.font26, Assets.bColor);
 		
-		reset = new Button("RESET", Window.WIDTH - 100, Window.HEIGHT - 100, new Click(){
+		reset = new Button("Reset", 120, Window.WIDTH/2 + 100, new Click(){
 			@Override
 			public void onClick() {
 				int isReset = JOptionPane.showConfirmDialog(null, 
@@ -90,7 +80,7 @@ public class LevelSelectorState extends State{
 					resetLevel();
 				} 
 			}
-		}, Assets.font30,new Color(0xFF4646));
+		}, Assets.font26, Assets.sColor);
 		
 	}
 
@@ -111,16 +101,16 @@ public class LevelSelectorState extends State{
 		
 		//background image
 		g.drawImage(Assets.moon, -100, -50, null);
-		g.drawImage(Assets.uranus, 0, window.HEIGHT/2+20, null);
-		g.drawImage(Assets.jupiter, window.WIDTH/2+180, -100, null);
-		g.drawImage(Assets.saturn2, window.WIDTH/2+150, window.HEIGHT/2, null);
+		g.drawImage(Assets.uranus, 0, Window.HEIGHT/2+70, null);
+		g.drawImage(Assets.jupiter, Window.WIDTH/2+180, -100, null);
+		g.drawImage(Assets.saturn2, Window.WIDTH/2+150, Window.HEIGHT/2, null);
 		
 		back.render(g);
 		reset.render(g);
 		
 		//header level
 		g.setFont(Assets.fontTitle);
-		Text.drawString(g, "Level", window.WIDTH/2, window.HEIGHT/9, true, new Color (0, 45, 42));
+		Text.drawString(g, "Level", Window.WIDTH/2, Window.HEIGHT/9, true, new Color (0, 45, 42));
 		
 		for(int i = 0; i < NUMLEVEL; i++) {
 			bLevels[i].render(g);

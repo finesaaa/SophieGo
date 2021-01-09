@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
-import javax.swing.JProgressBar;
-
 import com.sophiego.gfx.Assets;
 import com.sophiego.gfx.Text;
 import com.sophiego.main.Window;
@@ -39,10 +37,10 @@ public class StepCounterPanel {
 		//background progress
 		g.setColor(Color.LIGHT_GRAY);
 //		g.fillRoundRect(Window.WIDTH/2+180, 35, width, height, 25, 25);
-		g.fillRect(Window.WIDTH/2+180, 35, width, height);
+		g.fillRect(Window.WIDTH/2+180-2, 35-2, width+4, height+4);
 		
-		//actual profress
-		g.setColor(Color.yellow);
+		//actual progress
+		g.setColor(new Color(0xFFF851));
 //		g.fillRoundRect(Window.WIDTH/2+180, 35, (int) step, height, 25, 25);
 		g.fillRect(Window.WIDTH/2+180, 35, 180 - (int) step, height);
 		
