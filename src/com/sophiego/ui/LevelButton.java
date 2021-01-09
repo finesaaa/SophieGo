@@ -7,7 +7,7 @@ import java.awt.Rectangle;
 
 import com.sophiego.gfx.Assets;
 import com.sophiego.gfx.Text;
-import com.sophiego.input.MouseManager;
+import com.sophiego.handler.MouseHandler;
 import com.sophiego.states.LevelSelectorState;
 import com.sophiego.states.State;
 
@@ -40,9 +40,9 @@ public class LevelButton {
 	public void update(boolean solved, boolean played, int id) {
 		this.played = played;
 		this.solved = solved;
-		if(bounds != null && bounds.contains(MouseManager.x, MouseManager.y)) {
+		if(bounds != null && bounds.contains(MouseHandler.x, MouseHandler.y)) {
 			hovering = true;
-			if(MouseManager.left && played) {
+			if(MouseHandler.left && played) {
 				State.currentArrLevel = levelSelectorState.getLevels()[id];
 				State.currentLevel = id + 1;
 				click.onClick();

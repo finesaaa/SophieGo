@@ -35,14 +35,12 @@ public class StepCounterPanel {
 		double step = (numStep*180)/(double) targetNumStep;
 		
 		//background progress
-		g.setColor(Color.LIGHT_GRAY);
-//		g.fillRoundRect(Window.WIDTH/2+180, 35, width, height, 25, 25);
-		g.fillRect(Window.WIDTH/2+180-2, 35-2, width+4, height+4);
+		g.setColor(Assets.lightGrayColor);
+		g.fillRect(Window.WIDTH/2 + 180 - 2, 35 - 2, width + 4, height + 4);
 		
 		//actual progress
-		g.setColor(new Color(0xFFF851));
-//		g.fillRoundRect(Window.WIDTH/2+180, 35, (int) step, height, 25, 25);
-		g.fillRect(Window.WIDTH/2+180, 35, 180 - (int) step, height);
+		g.setColor(Assets.bColor);
+		g.fillRect(Window.WIDTH/2 + 180, 35, 180 - (int) step, height);
 		
 		//set font
 		g.setFont(font);

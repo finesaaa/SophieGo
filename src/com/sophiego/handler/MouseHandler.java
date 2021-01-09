@@ -1,14 +1,14 @@
-package com.sophiego.input;
+package com.sophiego.handler;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class MouseManager extends MouseAdapter {
+public class MouseHandler extends MouseAdapter {
 
 	public static int x, y;
 	public static boolean left;
 	
-	public MouseManager() {
+	public MouseHandler() {
 		x = 0;
 		y = 0;
 	}

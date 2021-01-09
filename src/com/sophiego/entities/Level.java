@@ -1,13 +1,16 @@
-package com.sophiego.sophie;
+package com.sophiego.entities;
 
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.IOException;
 
+import com.sophiego.algo.ShortestPath;
 import com.sophiego.gfx.Assets;
-import com.sophiego.input.KeyBoard;
+import com.sophiego.handler.KeyboardHandler;
+import com.sophiego.helper.LevelWriter;
 import com.sophiego.main.Window;
+import com.sophiego.shopie.Player;
 import com.sophiego.states.LevelSelectorState;
 import com.sophiego.states.State;
 import com.sophiego.ui.*;
@@ -17,12 +20,9 @@ public class Level {
 	public static final int TILESIZE = 48;
 	
 	private int[][] maze;
-	private int[][] copy;
+	private int[][] backup_maze;
 	
-	private int player_row, player_col;
 	private int num_coin, target_num_coin, num_step, target_num_step;
-	
-	private Image texture;
 	
 	private int xOffset, yOffset;
 	private long time, lastTime;
@@ -35,15 +35,17 @@ public class Level {
 	private ShortestPath shortestPath;
 	private boolean solved, played;
 	
-	private int plaStartRow, plaStartCol, plaEndRow, plaEndCol;
 	private int statusLevel;
 	private LevelSelectorState levelSelectorState;
 	
 	private int id;
 	private FontMetrics fm;
 	private String text;
+	private Player player;
 	
 	public Level(int[][] maze, int id_level, int player_row, int player_col, int status_level, LevelSelectorState levelSelectorState) {
+		
+		player = new Player(player_row, player_col);
 		this.levelSelectorState = levelSelectorState;
 
 		this.statusLevel = status_level;
@@ -53,25 +55,19 @@ public class Level {
 		this.num_step = 0;
 		this.id = id_level;
 		
-		copy = new int[maze.length][maze[0].length];
+		backup_maze = new int[maze.length][maze[0].length];
 		for (int row = 0; row < maze.length; row++) {
 			for (int col = 0; col < maze[row].length; col++)
 			{
-				copy[row][col] = maze[row][col];
+				backup_maze[row][col] = maze[row][col];
 				if (maze[row][col] == 3) this.target_num_coin++;
 				if (maze[row][col] == 5) {
-					plaEndRow = row;
-					plaEndCol = col;
+					player.setEndRow(row);
+					player.setEndCol(col);
 				}
 			}
-				
-			plaStartRow = player_row;
-			plaStartCol = player_col;
 			
-			this.player_row = player_row;
-			this.player_col = player_col;
-			
-			shortestPath = new ShortestPath(this.maze, plaStartRow, plaStartCol, plaEndRow, plaEndCol);
+			shortestPath = new ShortestPath(this.maze, this.player);
 			target_num_step = shortestPath.minMoves();
 			
 			if(this.statusLevel == 1) {
@@ -88,7 +84,6 @@ public class Level {
 			xOffset = (Window.WIDTH - maze[0].length * TILESIZE)/2;
 			yOffset = (Window.HEIGHT - maze.length * TILESIZE)/2;
 			
-			texture = Assets.PlayerFront;	
 			restart = new Button("Restart", 100, Window.HEIGHT/2, new Click(){
 				@Override
 				public void onClick() {
@@ -115,37 +110,36 @@ public class Level {
 	private void reset() {
 		for(int row = 0; row < maze.length; row++)
 			for(int col = 0; col < maze[row].length; col++)
-				maze[row][col] = copy[row][col];
+				maze[row][col] = backup_maze[row][col];
 		
 		num_step = 0;
 		num_coin = 0;
 		stepCounterPanel.update(num_step);
 		coinPanel.update(num_coin);
-		player_row = plaStartRow;
-		player_col = plaStartCol;
-		texture = Assets.PlayerFront;
+		player.resetPosition();
+		player.resetTexture();
 	}
 	
 	public void update() {
 		time += System.currentTimeMillis() - lastTime;
 		lastTime = System.currentTimeMillis();
 		
-		if (KeyBoard.isPressed && time > DELAY) {
-			if(KeyBoard.UP) {
+		if (KeyboardHandler.isPressed && time > DELAY) {
+			if(KeyboardHandler.UP) {
 				move(-1, 0);
-				texture = Assets.playerBack;
+				player.goUp();
 			}
-			if(KeyBoard.LEFT) {
+			if(KeyboardHandler.LEFT) {
 				move(0, -1);
-				texture = Assets.playerLeft;
+				player.goLeft();
 			}
-			if(KeyBoard.DOWN) {
+			if(KeyboardHandler.DOWN) {
 				move(1, 0);
-				texture = Assets.PlayerFront;
+				player.goDown();
 			}
-			if(KeyBoard.RIGHT) {
+			if(KeyboardHandler.RIGHT) {
 				move(0, 1);
-				texture = Assets.playerRight;
+				player.goRight();
 			}
 		}
 		
@@ -156,7 +150,7 @@ public class Level {
 			for(int col = 0; col < maze[row].length; col++)
 			{
 				if (num_step == target_num_step) {
-					texture = Assets.playerDead;
+					player.dead();
 				}
 				if(num_step > target_num_step) {
 					try {
@@ -175,7 +169,7 @@ public class Level {
 		if (levelSelectorState.getLevels()[id].isSolved()) {
 			State.currentLevel = id + 1;
 			try {
-				levelSelectorState.writeToPosition("./res/levels/"+(State.currentLevel - 1) + ".txt", "1", 0);
+				LevelWriter.writeToPosition("./res/levels/"+(State.currentLevel - 1) + ".txt", "1", 0);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -191,20 +185,19 @@ public class Level {
 
 	private void move(int row, int col) {
 
-		if(maze[player_row + row][player_col + col] != 1) {
+		if(maze[player.getRow() + row][player.getCol() + col] != 1) {
 			num_step++;
 			stepCounterPanel.update(num_step);
-			if(maze[player_row + row ][player_col + col] == 3)  {
-				maze[player_row + row][player_col + col] = 4; //ganti brick
+			if(maze[player.getRow() + row ][player.getCol() + col] == 3)  {
+				maze[player.getRow() + row][player.getCol() + col] = 4; //ganti brick
 				this.num_coin++;
 				coinPanel.update(num_coin);
 			}
-			if(maze[player_row + row ][player_col + col] == 5 && num_coin == target_num_coin)  {
-				maze[player_row + row][player_col + col] = 4; //ganti brick
+			if(maze[player.getRow() + row ][player.getCol() + col] == 5 && num_coin == target_num_coin)  {
+				maze[player.getRow() + row][player.getCol() + col] = 4; //ganti brick
 			}
 			
-			player_row += row;
-			player_col += col;
+			player.updatePosition(row, col);
 		}
 		time = 0;
 	}
@@ -231,7 +224,7 @@ public class Level {
 			}
 		}
 	
-		g.drawImage(texture, xOffset + player_col*TILESIZE, yOffset + player_row*TILESIZE, null);
+		g.drawImage(player.getTexture(), xOffset + player.getCol()*TILESIZE, yOffset + player.getRow()*TILESIZE, null);
 	}
 	
 	public void drawMapAsset(Graphics g, Image img, int col, int row) {
@@ -242,13 +235,14 @@ public class Level {
 		return id;
 	}
 
-	public boolean isPlayed() {return played;};
-	public void setPlayed(boolean bool) {played = bool;};
-	public boolean isSolved() {return solved;};
-	public void setSolved(boolean bool) {solved = bool;}; 
 	public void tryAgainLevel(int id_level) {
 		reset();
 		levelSelectorState.playThisLevel(id_level);
 	}
+	
+	public boolean isPlayed() {return played;};
+	public void setPlayed(boolean bool) {played = bool;};
+	public boolean isSolved() {return solved;};
+	public void setSolved(boolean bool) {solved = bool;}; 
 
 }

@@ -44,6 +44,7 @@ public class ResultState extends State{
 
 	@Override
 	public void render(Graphics g) {
+		g.drawImage(Assets.backBG, 0 , 0, null);
 		back.render(g);
 		play_again.render(g);
 		this.text = "You've passed level " + (State.currentLevel);

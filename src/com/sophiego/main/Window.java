@@ -8,11 +8,12 @@ import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 
+import com.sophiego.entities.Level;
 import com.sophiego.gfx.Assets;
-import com.sophiego.input.KeyBoard;
-import com.sophiego.input.MouseManager;
-import com.sophiego.sophie.Level;
+import com.sophiego.handler.KeyboardHandler;
+import com.sophiego.handler.MouseHandler;
 import com.sophiego.states.CongratsState;
+import com.sophiego.states.CreditState;
 import com.sophiego.states.GameOverState;
 import com.sophiego.states.GameState;
 import com.sophiego.states.LevelSelectorState;
@@ -43,9 +44,10 @@ public class Window extends JFrame implements Runnable {
 	private ResultState resultState;
 	private GameOverState gameOverState;
 	private CongratsState congratsState;
+	private CreditState creditState;
 	
-	private KeyBoard keyBoard;
-	private MouseManager mouseManager;
+	private KeyboardHandler keyBoard;
+	private MouseHandler mouseManager;
 
 	public Window() {
 		setTitle("Shopie Go");
@@ -55,8 +57,8 @@ public class Window extends JFrame implements Runnable {
 		setLocationRelativeTo(null);
 		
 		canvas = new Canvas();
-		keyBoard = new KeyBoard();
-		mouseManager = new MouseManager();
+		keyBoard = new KeyboardHandler();
+		mouseManager = new MouseHandler();
 		
 		canvas.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		canvas.setMaximumSize(new Dimension(WIDTH, HEIGHT));
@@ -121,10 +123,11 @@ public class Window extends JFrame implements Runnable {
 		resultState = new ResultState(this);
 		gameOverState = new GameOverState(this);
 		congratsState = new CongratsState(this);
+		creditState = new CreditState(this);
 		
 		State.currentState = loadingState;
 	}
-	
+
 	@Override
 	public void run() {
 		long now = 0;
@@ -190,5 +193,9 @@ public class Window extends JFrame implements Runnable {
 	
 	public State getCongratsState() {
 		return congratsState;
+	}
+	
+	public CreditState getCreditState() {
+		return creditState;
 	}
 }

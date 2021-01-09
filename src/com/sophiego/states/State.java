@@ -2,8 +2,8 @@ package com.sophiego.states;
 
 import java.awt.Graphics;
 
+import com.sophiego.entities.Level;
 import com.sophiego.main.Window;
-import com.sophiego.sophie.Level;
 
 public abstract class State {
 

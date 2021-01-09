@@ -1,15 +1,15 @@
-package com.sophiego.input;
+package com.sophiego.handler;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class KeyBoard implements KeyListener{
+public class KeyboardHandler implements KeyListener{
 
 	private boolean[] keys;
 	public static boolean UP, LEFT, RIGHT, DOWN;
 	public static boolean isPressed;
 	
-	public KeyBoard() {
+	public KeyboardHandler() {
 		keys = new boolean[256];
 		UP = false;
 		DOWN = false;

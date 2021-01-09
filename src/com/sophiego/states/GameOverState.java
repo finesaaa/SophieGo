@@ -17,7 +17,7 @@ public class GameOverState extends State{
 	public GameOverState(Window window) {
 		super(window);
 		
-		try_again = new Button("Play Again", Window.WIDTH/2 + 200, Window.HEIGHT/2 - 10, new Click() {
+		try_again = new Button("Play Again", Window.WIDTH/2 + 100, Window.HEIGHT/2 + 40, new Click() {
 			
 			@Override
 			public void onClick() {
@@ -27,7 +27,7 @@ public class GameOverState extends State{
 			
 		}, Assets.font26, Assets.mColor);
 		
-		back = new Button("Return Home", Window.WIDTH/2 + 200, Window.HEIGHT/2 + 75, new Click() {
+		back = new Button("Back Home", Window.WIDTH/2 + 100, Window.HEIGHT/2 + 95, new Click() {
 			
 			@Override
 			public void onClick() {
@@ -53,10 +53,10 @@ public class GameOverState extends State{
 		
 		//setting text
 		g.setFont(Assets.fontOver);
-		g.setColor(Assets.mColor);
+		g.setColor(Assets.sColor);
 		fm = g.getFontMetrics();
-		g.drawString(text, Window.WIDTH/2 - fm.stringWidth(text)/2 + 200, Window.HEIGHT/2 - 200);
-		g.drawString("OUT OF ENERGY!", Window.WIDTH/2 - fm.stringWidth(text)/2 + 150, Window.HEIGHT/2 - 120);
+		g.drawString(text, Window.WIDTH/2 + fm.stringWidth(text)/2 - 145, 180);
+		g.drawString("OUT OF ENERGY!", Window.WIDTH/2 + fm.stringWidth(text)/2 - 145, 240);
 	}
 
 }

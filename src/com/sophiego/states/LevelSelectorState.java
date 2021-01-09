@@ -10,10 +10,12 @@ import java.io.RandomAccessFile;
 
 import javax.swing.JOptionPane;
 
+import com.sophiego.entities.Level;
 import com.sophiego.gfx.Assets;
 import com.sophiego.gfx.Text;
+import com.sophiego.helper.LevelLoader;
+import com.sophiego.helper.LevelWriter;
 import com.sophiego.main.Window;
-import com.sophiego.sophie.Level;
 import com.sophiego.ui.Button;
 import com.sophiego.ui.Click;
 import com.sophiego.ui.LevelButton;
@@ -31,12 +33,15 @@ public class LevelSelectorState extends State{
 	
 	private Button back, reset;
 	private LevelButton[] bLevels = new LevelButton[NUMLEVEL];
+	private LevelLoader loader;
 	
 	public LevelSelectorState(Window window) {
 		super(window);
 		
+		loader = new LevelLoader(this);
+		
 		for(int id = 0; id < NUMLEVEL; id++)
-			levels[id] = loadLevel("/levels/" + id + ".txt", id);
+			levels[id] = loader.loadLevel("/levels/" + id + ".txt", id);
 		
 		int counter = 0;
 		for(int i = 0; i < 3; i++) {
@@ -121,71 +126,16 @@ public class LevelSelectorState extends State{
 		return NUMLEVEL;
 	}
 
-	private Level loadLevel(String path, int curr_level) {
-		String file = loadFileAsString(path);
-		String[] numbers = file.split("\\s+");
-		
-		int status_level = parseInt(numbers[0]);
-		int cols = parseInt(numbers[1]);
-		int rows = parseInt(numbers[2]);
-	
-		int player_col = parseInt(numbers[3]);
-		int player_row = parseInt(numbers[4]);
-		
-		int[][] maze = new int[rows][cols];
-		for(int row = 0; row < rows; row++)
-			for(int col = 0; col < cols; col++)
-				maze[row][col] = parseInt(numbers[(col + (row*cols)) + 5]);
-		
-		return new Level(maze, curr_level, player_row, player_col, status_level, this);
-	}
-
-	private int parseInt(String num) {
-		try {
-			return Integer.parseInt(num);
-		}catch (NumberFormatException e) {
-			e.printStackTrace();
-			return 0;
-		}
-	}
-
-
-	private String loadFileAsString(String path) {
-		StringBuilder builder = new StringBuilder();
-		try {
-			InputStream in = LevelSelectorState.class.getResourceAsStream(path);
-			BufferedReader br = new BufferedReader(new InputStreamReader(in));
-			
-			String line;
-			while((line = br.readLine()) != null) {
-				builder.append(line + "\n");
-			}
-			br.close();
-		}catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return builder.toString();
-	}
-	
-	public void writeToPosition(String fileName, String data, long position) throws IOException {
-		RandomAccessFile writer = new RandomAccessFile(fileName, "rw");
-	    writer.seek(position);
-	    writer.writeBytes(data);
-	    writer.close();
-	}
-	
-
 	public void resetLevel() {
 		for(int id = 0; id < NUMLEVEL; id++) {
 			try {
-				writeToPosition("./res/levels/"+(id) + ".txt", "0", 0);
+				LevelWriter.writeToPosition("./res/levels/"+(id) + ".txt", "0", 0);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 		for(int id = 0; id < NUMLEVEL; id++)
-			levels[id] = loadLevel("/levels/" + id + ".txt", id);
+			levels[id] = loader.loadLevel("/levels/" + id + ".txt", id);
 		
 		render(this.gL);
 	}

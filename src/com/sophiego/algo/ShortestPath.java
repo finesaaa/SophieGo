@@ -1,9 +1,11 @@
-package com.sophiego.sophie;
+package com.sophiego.algo;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+
+import com.sophiego.shopie.Player;
 
 public class ShortestPath {
 
@@ -16,14 +18,14 @@ public class ShortestPath {
     int MAXDIST = 1000 * 1000;
 
     
-	public ShortestPath(int[][] maze, int src_x, int src_y, int dst_x, int dst_y) {
+	public ShortestPath(int[][] maze, Player player) {
 		this.maze = maze;
+	
+		this.src_x = player.getStartRow();
+		this.src_y = player.getStartCol();
 		
-		this.src_x = src_x;
-		this.src_y = src_y;
-		
-		this.dst_x = dst_x;
-		this.dst_y = dst_y;
+		this.dst_x = player.getEndRow();
+		this.dst_y = player.getEndCol();
 		
 		this.row = maze.length;
 		this.col = maze[0].length;
@@ -33,7 +35,7 @@ public class ShortestPath {
         return r >= 0 && r < row && c >= 0 && c < col;
     }
 	
-	int minMoves() {
+	public int minMoves() {
         int[] startPoint = {src_x, src_y};
 
         coins = new ArrayList<>();
@@ -100,9 +102,7 @@ public class ShortestPath {
             int[] point = q.poll();
             int oldR = point[0];
             int oldC = point[1];
-            
-//          System.out.println("oldR= " + oldR + " oldC= " + oldC + " coin= " + coin + " dist[oldR][oldC][coin]= " + dist[oldR][oldC][coin]);
-           
+         
             for (int k = 0; k < 4; k++) {
                 int newR = oldR + dr[k];
                 int newC = oldC + dc[k];

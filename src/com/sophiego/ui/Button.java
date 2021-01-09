@@ -7,7 +7,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import com.sophiego.gfx.Text;
-import com.sophiego.input.MouseManager;
+import com.sophiego.handler.MouseHandler;
 import com.sophiego.states.State;
 
 public class Button {
@@ -28,15 +28,15 @@ public class Button {
 		this.click = click;
 		hovering = false;
 		
-		this.text = text;
+		this.text = (text).toUpperCase();
 		this.font = font;
 		this.color = color;
 	}
 
 	public void update() {
-		if(bounds != null && bounds.contains(MouseManager.x, MouseManager.y)){
+		if(bounds != null && bounds.contains(MouseHandler.x, MouseHandler.y)){
 			hovering = true;
-			if (MouseManager.left) {
+			if (MouseHandler.left) {
 				delayState();
 				click.onClick();
 			}	
@@ -50,14 +50,14 @@ public class Button {
 		fm = g.getFontMetrics();
 		if(hovering) {
 			g.setColor(color.darker());
-			g.fillRoundRect(x - fm.stringWidth(text)/2 - 20 - 20, y - fm.getHeight()/2 - 3, fm.stringWidth(text) + 40 + 40, fm.getHeight() + 6, 50, 50);
+			g.fillRoundRect(x - fm.stringWidth(text)/2 - 25, y - fm.getHeight()/2 - 3, fm.stringWidth(text) + 50, fm.getHeight() + 6, 50, 50);
 			Text.drawString(g, text, x, y, true, new Color(0xCCCCCC));
 		} else {
 			g.setColor(color);
-			g.fillRoundRect(x - fm.stringWidth(text)/2 - 20 - 20, y - fm.getHeight()/2 - 3, fm.stringWidth(text) + 40 + 40, fm.getHeight() + 6, 50, 50);
+			g.fillRoundRect(x - fm.stringWidth(text)/2 - 25, y - fm.getHeight()/2 - 3, fm.stringWidth(text) + 50, fm.getHeight() + 6, 50, 50);
 			Text.drawString(g, text, x, y, true, Color.WHITE);
 		}
-		bounds = new Rectangle(x - fm.stringWidth(text)/2 - 20 - 20, y - fm.getHeight()/2 - 3, fm.stringWidth(text) + 40 + 40, fm.getHeight() + 6);
+		bounds = new Rectangle(x - fm.stringWidth(text)/2 - 25, y - fm.getHeight()/2 - 3, fm.stringWidth(text) + 50, fm.getHeight() + 6);
 	}
 	
 	public void delayState() {
