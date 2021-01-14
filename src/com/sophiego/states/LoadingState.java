@@ -4,6 +4,7 @@ import java.awt.Graphics;
 
 import com.sophiego.gfx.Assets;
 import com.sophiego.gfx.Text;
+import com.sophiego.helper.SoundLoader;
 import com.sophiego.main.Window;
 
 public class LoadingState extends State {
@@ -15,6 +16,7 @@ public class LoadingState extends State {
 	
 	public LoadingState (Window window){
 		super(window);
+		SoundLoader.playSound("loading_sound.wav", 100, false);
 		time = 0;
 		lastTime = System.currentTimeMillis();
 	}

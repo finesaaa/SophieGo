@@ -12,6 +12,7 @@ import com.sophiego.entities.Level;
 import com.sophiego.gfx.Assets;
 import com.sophiego.handler.KeyboardHandler;
 import com.sophiego.handler.MouseHandler;
+import com.sophiego.helper.SoundLoader;
 import com.sophiego.states.CongratsState;
 import com.sophiego.states.CreditState;
 import com.sophiego.states.GameOverState;
@@ -124,7 +125,6 @@ public class Window extends JFrame implements Runnable {
 		gameOverState = new GameOverState(this);
 		congratsState = new CongratsState(this);
 		creditState = new CreditState(this);
-		
 		State.currentState = loadingState;
 	}
 

@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 
 import com.sophiego.gfx.Text;
 import com.sophiego.handler.MouseHandler;
+import com.sophiego.helper.SoundLoader;
 import com.sophiego.states.State;
 
 public class Button {
@@ -37,6 +38,7 @@ public class Button {
 		if(bounds != null && bounds.contains(MouseHandler.x, MouseHandler.y)){
 			hovering = true;
 			if (MouseHandler.left) {
+				SoundLoader.playSound("button_click_sound.wav", 100, false);
 				delayState();
 				click.onClick();
 			}	

@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import com.sophiego.gfx.Assets;
 import com.sophiego.gfx.Text;
+import com.sophiego.helper.SoundLoader;
 import com.sophiego.main.Window;
 import com.sophiego.ui.Button;
 import com.sophiego.ui.Click;

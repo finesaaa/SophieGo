@@ -4,6 +4,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 
 import com.sophiego.gfx.Assets;
+import com.sophiego.helper.SoundLoader;
 import com.sophiego.main.Window;
 import com.sophiego.ui.Button;
 import com.sophiego.ui.Click;

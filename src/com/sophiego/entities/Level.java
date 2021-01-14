@@ -9,6 +9,7 @@ import com.sophiego.algo.ShortestPath;
 import com.sophiego.gfx.Assets;
 import com.sophiego.handler.KeyboardHandler;
 import com.sophiego.helper.LevelWriter;
+import com.sophiego.helper.SoundLoader;
 import com.sophiego.main.Window;
 import com.sophiego.shopie.Player;
 import com.sophiego.states.LevelSelectorState;
@@ -153,8 +154,9 @@ public class Level {
 					player.dead();
 				}
 				if(num_step > target_num_step) {
+					SoundLoader.playSound("game_over_sound.wav", 100, false);
 					try {
-						Thread.sleep(600);
+						Thread.sleep(400);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -175,8 +177,10 @@ public class Level {
 				e.printStackTrace();
 			}
 			if (id == (levelSelectorState.getNUMLEVEL() - 1)) {
+				SoundLoader.playSound("game_complete_sound.wav", 100, false);
 				levelSelectorState.showCongratsState();
 			} else {
+				SoundLoader.playSound("level_complete_sound.wav", 100, false);
 				levelSelectorState.getLevels()[State.currentLevel].setPlayed(true);
 				levelSelectorState.showResult();
 			}
@@ -189,6 +193,7 @@ public class Level {
 			num_step++;
 			stepCounterPanel.update(num_step);
 			if(maze[player.getRow() + row ][player.getCol() + col] == 3)  {
+				SoundLoader.playSound("coin_picked_sound.wav", 100, false);
 				maze[player.getRow() + row][player.getCol() + col] = 4; //ganti brick
 				this.num_coin++;
 				coinPanel.update(num_coin);

@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 import com.sophiego.gfx.Assets;
 import com.sophiego.gfx.Text;
 import com.sophiego.handler.MouseHandler;
+import com.sophiego.helper.SoundLoader;
 import com.sophiego.states.LevelSelectorState;
 import com.sophiego.states.State;
 
@@ -45,6 +46,7 @@ public class LevelButton {
 			if(MouseHandler.left && played) {
 				State.currentArrLevel = levelSelectorState.getLevels()[id];
 				State.currentLevel = id + 1;
+				SoundLoader.playSound("button_click_sound.wav", 100, false);
 				click.onClick();
 			}
 		} else {
